@@ -1,21 +1,10 @@
 package ast.expressions;
 
+import ast.AbstractASTNode;
 import ast.Expression;
 
-public class AbstractExpression implements Expression {
-    private int line;
-    private int column;
+public class AbstractExpression extends AbstractASTNode implements Expression {
     public AbstractExpression(int line, int column){
-        this.line=line;
-        this.column=column;
-    }
-    @Override
-    public int getLine() {
-        return line;
-    }
-
-    @Override
-    public int getColumn() {
-        return column;
+        super(line, column);
     }
 }
