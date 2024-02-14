@@ -1,0 +1,24 @@
+
+Elementos l�xicos sensibles a may�sculas/min�sculas.
+
+Elementos:
+
+  Comentarios con # hasta el final de l�nea
+  Comentarios con varias l�neas (de """ hasta """)
+  Identificadores { letra o _ (letra|digito|_)* }
+  Constantes Enteras sin signo
+  Constantes Reales con punto decimal y formato exponente
+	12.3, 34.12E-3, 2., 3e3
+  - Entradas válidas:
+    -12.0
+    -12.
+    -.5
+    -0.5
+    -3e3
+    -3E3
+    -3E+3
+    -3.4e2
+    -.5e-14
+  Constantes car�cter entre '',
+  Constantes car�cter entre mediante codigo ASCII '\126'
+  Dos caracteres especiales '\n' y '\t'
