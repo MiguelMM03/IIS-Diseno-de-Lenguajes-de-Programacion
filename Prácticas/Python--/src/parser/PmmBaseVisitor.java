@@ -1,4 +1,4 @@
-// Generated from C:/Users/UO287687/Desktop/Repositorio/IIS-Diseno-de-Lenguajes-de-Programacion/Pr�cticas/Python--/src/parser/Pmm.g4 by ANTLR 4.13.1
+// Generated from /home/miguel/OneDrive/3ºSoftware/Repositorios/DLP/IIS-Diseno-de-Lenguajes-de-Programacion/Prácticas/Python--/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
