@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Struct implements Type {
+public class Struct extends AbstractType {
     private List<RecordField> recordFields=new ArrayList<>();
-    public Struct(RecordField...recordFields){
+    public Struct(int line, int column,RecordField...recordFields){
+        super(line, column);
         this.recordFields= Arrays.stream(recordFields).toList();
     }
 

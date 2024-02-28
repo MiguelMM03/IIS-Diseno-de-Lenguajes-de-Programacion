@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FunctionType implements Type {
+public class FunctionType extends AbstractType  {
     private Type returnType;
     private List<Type> params=new ArrayList<>();
-    public FunctionType(Type returnType, Type...params){
+    public FunctionType(int line, int column, Type returnType, Type...params){
+        super(line, column);
         this.returnType=returnType;
         this.params= Arrays.stream(params).toList();
     }

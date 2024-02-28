@@ -1,5 +1,12 @@
 // Generated from /home/miguel/OneDrive/3ºSoftware/Repositorios/DLP/IIS-Diseno-de-Lenguajes-de-Programacion/Prácticas/Python--/src/parser/Pmm.g4 by ANTLR 4.13.1
 package parser;
+
+    import ast.*;
+    import ast.definitions.*;
+    import ast.statements.*;
+    import ast.expressions.*;
+    import ast.types.*;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
