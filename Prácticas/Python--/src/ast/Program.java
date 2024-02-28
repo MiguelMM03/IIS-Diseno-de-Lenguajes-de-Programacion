@@ -3,15 +3,10 @@ package ast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Program implements ASTNode {
+public class Program extends AbstractASTNode {
     private List<Definition> definitions=new ArrayList<>();
-    @Override
-    public int getLine() {
-        return 0;
-    }
-
-    @Override
-    public int getColumn() {
-        return 0;
+    public Program(List<Definition> definitions){
+        super(0,0);
+        this.definitions=definitions;
     }
 }

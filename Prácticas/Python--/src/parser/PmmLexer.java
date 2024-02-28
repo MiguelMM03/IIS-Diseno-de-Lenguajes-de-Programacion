@@ -6,6 +6,8 @@ package parser;
     import ast.statements.*;
     import ast.expressions.*;
     import ast.types.*;
+    import java.util.Map;
+    import java.util.HashMap;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -52,7 +54,7 @@ public class PmmLexer extends Lexer {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'def'", "'main'", "'('", "')'", "':'", "'{'", "'}'", "','", "';'", 
+			null, "'def'", "'main'", "'('", "')'", "':'", "'{'", "'}'", "';'", "','", 
 			"'return'", "'print'", "'input'", "'='", "'if'", "'else'", "'while'", 
 			"'['", "']'", "'.'", "'-'", "'!'", "'*'", "'/'", "'%'", "'+'", "'>'", 
 			"'<'", "'<='", "'>='", "'!='", "'=='", "'&&'", "'||'", "'int'", "'double'", 
@@ -220,8 +222,8 @@ public class PmmLexer extends Lexer {
 		"\u0000\u0000\u0000`a\u0005(\u0000\u0000a\u0006\u0001\u0000\u0000\u0000"+
 		"bc\u0005)\u0000\u0000c\b\u0001\u0000\u0000\u0000de\u0005:\u0000\u0000"+
 		"e\n\u0001\u0000\u0000\u0000fg\u0005{\u0000\u0000g\f\u0001\u0000\u0000"+
-		"\u0000hi\u0005}\u0000\u0000i\u000e\u0001\u0000\u0000\u0000jk\u0005,\u0000"+
-		"\u0000k\u0010\u0001\u0000\u0000\u0000lm\u0005;\u0000\u0000m\u0012\u0001"+
+		"\u0000hi\u0005}\u0000\u0000i\u000e\u0001\u0000\u0000\u0000jk\u0005;\u0000"+
+		"\u0000k\u0010\u0001\u0000\u0000\u0000lm\u0005,\u0000\u0000m\u0012\u0001"+
 		"\u0000\u0000\u0000no\u0005r\u0000\u0000op\u0005e\u0000\u0000pq\u0005t"+
 		"\u0000\u0000qr\u0005u\u0000\u0000rs\u0005r\u0000\u0000st\u0005n\u0000"+
 		"\u0000t\u0014\u0001\u0000\u0000\u0000uv\u0005p\u0000\u0000vw\u0005r\u0000"+

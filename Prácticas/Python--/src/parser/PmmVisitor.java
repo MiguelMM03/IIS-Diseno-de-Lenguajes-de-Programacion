@@ -6,6 +6,8 @@ package parser;
     import ast.statements.*;
     import ast.expressions.*;
     import ast.types.*;
+    import java.util.Map;
+    import java.util.HashMap;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -42,6 +44,12 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVar_definition(PmmParser.Var_definitionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PmmParser#var_definition_aux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVar_definition_aux(PmmParser.Var_definition_auxContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PmmParser#function_definition}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -53,6 +61,18 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitStatement(PmmParser.StatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmmParser#params_aux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParams_aux(PmmParser.Params_auxContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link PmmParser#body_aux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBody_aux(PmmParser.Body_auxContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PmmParser#expression}.
 	 * @param ctx the parse tree

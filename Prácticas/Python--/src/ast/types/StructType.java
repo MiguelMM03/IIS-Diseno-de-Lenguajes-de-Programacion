@@ -1,16 +1,14 @@
 package ast.types;
 
-import ast.Type;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Struct extends AbstractType {
+public class StructType extends AbstractType {
     private List<RecordField> recordFields=new ArrayList<>();
-    public Struct(int line, int column,RecordField...recordFields){
+    public StructType(int line, int column, List<RecordField>recordFields){
         super(line, column);
-        this.recordFields= Arrays.stream(recordFields).toList();
+        this.recordFields= recordFields;
     }
 
     public List<RecordField> getRecordFields() {
