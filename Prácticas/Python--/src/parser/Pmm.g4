@@ -44,8 +44,8 @@ statement returns [List<Statement> ast=new ArrayList<>();] locals[List<Statement
         |   IF='if'e=expression':'(ifBody=body_aux)('else'':'(elseBody_aux=body_aux){$elseBody=$elseBody_aux.ast;})?{$ast.add(new Conditional($IF.getLine(),$IF.getCharPositionInLine()+1,$e.ast,$ifBody.ast,$elseBody));}
         |   W='while'e=expression':'body=body_aux{$ast.add(new While($W.getLine(),$W.getCharPositionInLine()+1,$e.ast,$body.ast));}
         |   R='return'e=expression';'{$ast.add(new Return($R.getLine(),$R.getCharPositionInLine()+1,$e.ast));}
-        |   e1=expression'('p=params_aux')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,$e1.text,$p.ast));}
-        |   st=statement'('')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,$e1.text,new ArrayList<Expression>()));}
+        |   e1=expression'('p=params_aux')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,new Variable($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text),$p.ast));}
+        |   st=statement'('')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,new Variable($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text),new ArrayList<Expression>()));}
 ;
 params_aux returns [List<Expression> ast = new ArrayList<>()]:
     (e1=expression{$ast.add($e1.ast);}(','e2=expression{$ast.add($e2.ast);})*)?
@@ -58,7 +58,8 @@ expression returns [Expression ast] locals [List<Expression> params=new ArrayLis
         |   REAL_CONSTANT {$ast=new DoubleLiteral($REAL_CONSTANT.getLine(),$REAL_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToReal($REAL_CONSTANT.text));}
         |   CHAR_CONSTANT {$ast=new CharLiteral($CHAR_CONSTANT.getLine(),$CHAR_CONSTANT.getCharPositionInLine()+1,LexerHelper.lexemeToChar($CHAR_CONSTANT.text));}
         |   ID {$ast=new Variable($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text);}
-        |   e1=expression'('(e2=expression{$params.add($e2.ast);}(','e3=expression {$params.add($e3.ast);})*)?')'{$ast = new FunctionCall($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text, $params);}
+        |   e1=expression'('(e2=expression{$params.add($e2.ast);}(','e3=expression {$params.add($e3.ast);})*)?')'
+            {$ast = new FunctionCall($e1.ast.getLine(), $e1.ast.getColumn()+1, new Variable($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text), $params);}
         |   '('e=expression')'{$ast=$e.ast;}
         |   e1=expression'['e2=expression']'{$ast=new ArrayAccess($e2.ast.getLine(),$e2.ast.getColumn()+1,$e1.ast,$e2.ast);}
         |   e=expression'.'ID{$ast=new StructAccess($ID.getLine(), $ID.getCharPositionInLine()+1,$e.ast,$ID.text);}
