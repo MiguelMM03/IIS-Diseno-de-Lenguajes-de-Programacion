@@ -9,4 +9,8 @@ public class Program extends AbstractASTNode {
         super(0,0);
         this.definitions=definitions;
     }
+
+    public List<Definition> getDefinitions() {
+        return this.definitions;
+    }
 }

@@ -6,8 +6,6 @@ package parser;
     import ast.statements.*;
     import ast.expressions.*;
     import ast.types.*;
-    import java.util.Map;
-    import java.util.HashMap;
 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
