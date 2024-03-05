@@ -32,10 +32,13 @@ var_definition_aux returns[List<VariableDef> ast = new ArrayList<VariableDef>()]
                 }
             }
 ;
-function_definition returns[FunctionDef ast] locals[List<VariableDef> params=new ArrayList<>(), List<Statement> body=new ArrayList<>(), Type returnType=VoidType.getInstance()]:
+function_definition returns[FunctionDef ast] locals[List<VariableDef> params=new ArrayList<>(), List<VariableDef> vars=new ArrayList<>(), List<Statement> body=new ArrayList<>(), Type returnType=VoidType.getInstance()]:
             'def'ID'('(v1=var_definition_aux{$params.addAll($v1.ast);}(','(v2=var_definition_aux{$params.addAll($v2.ast);}))*)?')'':'(t1=type{$returnType=$t1.ast;})?'{'
-            (v3=var_definition{$params.addAll($v3.ast);})*(s=statement{$body.addAll($s.ast);})*('return't2=type';')?'}'
-            {$ast=new FunctionDef($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,$returnType,$params,$body);}
+            (v3=var_definition{$vars.addAll($v3.ast);})*(s=statement{$body.addAll($s.ast);})*('return't2=type';')?'}'
+            {
+                FunctionType ft=new FunctionType($ID.getLine(),$ID.getCharPositionInLine()+1,$returnType,$params);
+                $ast=new FunctionDef($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,ft,$vars,$body);
+            }
 ;
 statement returns [List<Statement> ast=new ArrayList<>();] locals[List<Statement> elseBody=new ArrayList<Statement>()]:
             'print'e1=expression{$ast.add(new Print($e1.ast.getLine(),$e1.ast.getColumn()+1,$e1.ast));}(','e2=expression{$ast.add(new Print($e2.ast.getLine(),$e2.ast.getColumn()+1,$e2.ast));})*';'

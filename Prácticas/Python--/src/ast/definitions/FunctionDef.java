@@ -7,17 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionDef extends AbstractDefinition{
-    private List<VariableDef> params=new ArrayList<>();
+    private List<VariableDef> vars =new ArrayList<>();
     private List<Statement> body=new ArrayList<>();
 
-    public FunctionDef(int line, int column, String name, Type type, List<VariableDef> params, List<Statement> body) {
+    public FunctionDef(int line, int column, String name, Type type, List<VariableDef> vars, List<Statement> body) {
         super(line, column, name, type);
-        this.params=params;
+        this.vars =vars;
         this.body=body;
     }
 
-    public List<VariableDef> getParams() {
-        return params;
+    public List<VariableDef> getVars() {
+        return vars;
     }
 
     public List<Statement> getBody() {
