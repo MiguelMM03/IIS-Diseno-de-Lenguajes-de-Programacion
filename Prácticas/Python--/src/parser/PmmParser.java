@@ -6,6 +6,7 @@ package parser;
     import ast.statements.*;
     import ast.expressions.*;
     import ast.types.*;
+    import errorhandler.ErrorHandler;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -418,7 +419,18 @@ public class PmmParser extends Parser {
 			{
 			setState(72);
 			((Var_definition_auxContext)_localctx).id1 = match(ID);
-			 _localctx.vars.add(new VariableDef(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null),null));
+
+			                boolean repeated=false;
+			                for(VariableDef var: _localctx.vars){
+			                    if(var.getName().equals((((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null))){
+			                        ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,"Variable "+(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null)+" repeated"));
+			                        repeated=true;
+			                    }
+			                }
+			                if(!repeated){
+			                    _localctx.vars.add(new VariableDef(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null),null));
+			                }
+			            
 			setState(79);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -429,7 +441,18 @@ public class PmmParser extends Parser {
 				match(T__8);
 				setState(75);
 				((Var_definition_auxContext)_localctx).id2 = match(ID);
-				 _localctx.vars.add(new VariableDef(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null),null));
+
+				                repeated=false;
+				                for(VariableDef var: _localctx.vars){
+				                    if(var.getName().equals((((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null))){
+				                        ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,"Variable "+(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null)+" repeated"));
+				                        repeated=true;
+				                    }
+				                }
+				                if(!repeated){
+				                    _localctx.vars.add(new VariableDef(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null),null));
+				                }
+				            
 				}
 				}
 				setState(81);

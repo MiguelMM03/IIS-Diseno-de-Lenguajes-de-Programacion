@@ -26,6 +26,9 @@ public class ErrorHandler {
             ps.println(error.toString());
         }
     }
+    public void addError(ErrorType error){
+        errors.add(error);
+    }
 
 
 }

@@ -5,6 +5,7 @@ grammar Pmm;
     import ast.statements.*;
     import ast.expressions.*;
     import ast.types.*;
+    import errorhandler.ErrorHandler;
 }
 
 program returns[Program ast] locals[List<Definition> definitions=new ArrayList<>()]:
@@ -23,8 +24,30 @@ var_definition returns[List<VariableDef> ast]:
     v=var_definition_aux';'{$ast=$v.ast;}
 ;
 var_definition_aux returns[List<VariableDef> ast = new ArrayList<VariableDef>()] locals [List<VariableDef> vars=new ArrayList<>();]:
-            id1=ID{ $vars.add(new VariableDef($id1.getLine(),$id1.getCharPositionInLine()+1,$id1.text,null));}
-            (','id2=ID{ $vars.add(new VariableDef($id2.getLine(),$id1.getCharPositionInLine()+1,$id2.text,null));})*
+            id1=ID{
+                boolean repeated=false;
+                for(VariableDef var: $vars){
+                    if(var.getName().equals($id1.text)){
+                        ErrorHandler.getInstance().addError(new ErrorType($id1.getLine(),$id1.getCharPositionInLine()+1,"Variable "+$id1.text+" repeated"));
+                        repeated=true;
+                    }
+                }
+                if(!repeated){
+                    $vars.add(new VariableDef($id1.getLine(),$id1.getCharPositionInLine()+1,$id1.text,null));
+                }
+            }
+            (','id2=ID{
+                repeated=false;
+                for(VariableDef var: $vars){
+                    if(var.getName().equals($id2.text)){
+                        ErrorHandler.getInstance().addError(new ErrorType($id2.getLine(),$id2.getCharPositionInLine()+1,"Variable "+$id2.text+" repeated"));
+                        repeated=true;
+                    }
+                }
+                if(!repeated){
+                    $vars.add(new VariableDef($id2.getLine(),$id2.getCharPositionInLine()+1,$id2.text,null));
+                }
+            })*
             ':'t=type
             {
                 for(VariableDef v:$vars){
