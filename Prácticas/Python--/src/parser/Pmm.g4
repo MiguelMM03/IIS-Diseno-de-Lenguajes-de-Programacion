@@ -28,7 +28,7 @@ var_definition_aux returns[List<VariableDef> ast = new ArrayList<VariableDef>()]
                 boolean repeated=false;
                 for(VariableDef var: $vars){
                     if(var.getName().equals($id1.text)){
-                        ErrorHandler.getInstance().addError(new ErrorType($id1.getLine(),$id1.getCharPositionInLine()+1,"Variable "+$id1.text+" repeated"));
+                        ErrorHandler.getInstance().addError(new ErrorType($id1.getLine(),$id1.getCharPositionInLine()+1,"Variable repeated: "+$id1.text));
                         repeated=true;
                     }
                 }
@@ -40,7 +40,7 @@ var_definition_aux returns[List<VariableDef> ast = new ArrayList<VariableDef>()]
                 repeated=false;
                 for(VariableDef var: $vars){
                     if(var.getName().equals($id2.text)){
-                        ErrorHandler.getInstance().addError(new ErrorType($id2.getLine(),$id2.getCharPositionInLine()+1,"Variable "+$id2.text+" repeated"));
+                        ErrorHandler.getInstance().addError(new ErrorType($id2.getLine(),$id2.getCharPositionInLine()+1,"Variable repeated: "+$id2.text));
                         repeated=true;
                     }
                 }
@@ -106,7 +106,16 @@ type returns [Type ast] locals[List<RecordField> records=new ArrayList<>()]:
     |   STRUCT='struct''{'(v=var_definition
         {
             for(VariableDef vdef:$v.ast){
-                $records.add(new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType()));
+                boolean repeated=false;
+                for(RecordField record:$records){
+                    if(vdef.getName().equals(record.getName())){
+                        ErrorHandler.getInstance().addError(new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName()));
+                        repeated=true;
+                    }
+                }
+                if(!repeated){
+                    $records.add(new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType()));
+                }
             }
         }
         )*'}'{$ast=new StructType($STRUCT.getLine(),$STRUCT.getCharPositionInLine(),$records);}
