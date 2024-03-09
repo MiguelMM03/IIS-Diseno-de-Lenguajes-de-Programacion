@@ -25,27 +25,20 @@ var_definition returns[List<VariableDef> ast]:
 ;
 var_definition_aux returns[List<VariableDef> ast = new ArrayList<VariableDef>()] locals [List<VariableDef> vars=new ArrayList<>();]:
             id1=ID{
-                boolean repeated=false;
-                for(VariableDef var: $vars){
-                    if(var.getName().equals($id1.text)){
-                        ErrorHandler.getInstance().addError(new ErrorType($id1.getLine(),$id1.getCharPositionInLine()+1,"Variable repeated: "+$id1.text));
-                        repeated=true;
-                    }
-                }
-                if(!repeated){
-                    $vars.add(new VariableDef($id1.getLine(),$id1.getCharPositionInLine()+1,$id1.text,null));
+                VariableDef var=new VariableDef($id1.getLine(),$id1.getCharPositionInLine()+1,$id1.text,null);
+                if($vars.contains(var)){
+                    ErrorHandler.getInstance().addError(new ErrorType($id1.getLine(),$id1.getCharPositionInLine()+1,"Variable repeated: "+$id1.text));
+                }else{
+                    $vars.add(var);
                 }
             }
             (','id2=ID{
-                repeated=false;
-                for(VariableDef var: $vars){
-                    if(var.getName().equals($id2.text)){
-                        ErrorHandler.getInstance().addError(new ErrorType($id2.getLine(),$id2.getCharPositionInLine()+1,"Variable repeated: "+$id2.text));
-                        repeated=true;
-                    }
+                var=new VariableDef($id2.getLine(),$id2.getCharPositionInLine()+1,$id2.text,null);
+                if($vars.contains(var)){
+                     ErrorHandler.getInstance().addError(new ErrorType($id2.getLine(),$id2.getCharPositionInLine()+1,"Variable repeated: "+$id2.text));
                 }
-                if(!repeated){
-                    $vars.add(new VariableDef($id2.getLine(),$id2.getCharPositionInLine()+1,$id2.text,null));
+                else{
+                    $vars.add(var);
                 }
             })*
             ':'t=type
@@ -106,15 +99,12 @@ type returns [Type ast] locals[List<RecordField> records=new ArrayList<>()]:
     |   STRUCT='struct''{'(v=var_definition
         {
             for(VariableDef vdef:$v.ast){
-                boolean repeated=false;
-                for(RecordField record:$records){
-                    if(vdef.getName().equals(record.getName())){
-                        ErrorHandler.getInstance().addError(new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName()));
-                        repeated=true;
-                    }
+                RecordField record=new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType());
+                if($records.contains(record)){
+                    ErrorHandler.getInstance().addError(new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName()));
                 }
-                if(!repeated){
-                    $records.add(new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType()));
+                else{
+                    $records.add(record);
                 }
             }
         }

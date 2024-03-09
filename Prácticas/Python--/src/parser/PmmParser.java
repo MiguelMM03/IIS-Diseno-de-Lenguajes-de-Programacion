@@ -420,15 +420,11 @@ public class PmmParser extends Parser {
 			setState(72);
 			((Var_definition_auxContext)_localctx).id1 = match(ID);
 
-			                boolean repeated=false;
-			                for(VariableDef var: _localctx.vars){
-			                    if(var.getName().equals((((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null))){
-			                        ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null)));
-			                        repeated=true;
-			                    }
-			                }
-			                if(!repeated){
-			                    _localctx.vars.add(new VariableDef(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null),null));
+			                VariableDef var=new VariableDef(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null),null);
+			                if(_localctx.vars.contains(var)){
+			                    ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null)));
+			                }else{
+			                    _localctx.vars.add(var);
 			                }
 			            
 			setState(79);
@@ -442,15 +438,12 @@ public class PmmParser extends Parser {
 				setState(75);
 				((Var_definition_auxContext)_localctx).id2 = match(ID);
 
-				                repeated=false;
-				                for(VariableDef var: _localctx.vars){
-				                    if(var.getName().equals((((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null))){
-				                        ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null)));
-				                        repeated=true;
-				                    }
+				                var=new VariableDef(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null),null);
+				                if(_localctx.vars.contains(var)){
+				                     ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null)));
 				                }
-				                if(!repeated){
-				                    _localctx.vars.add(new VariableDef(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null),null));
+				                else{
+				                    _localctx.vars.add(var);
 				                }
 				            
 				}
@@ -1480,15 +1473,12 @@ public class PmmParser extends Parser {
 					((TypeContext)_localctx).v = var_definition();
 
 					            for(VariableDef vdef:((TypeContext)_localctx).v.ast){
-					                boolean repeated=false;
-					                for(RecordField record:_localctx.records){
-					                    if(vdef.getName().equals(record.getName())){
-					                        ErrorHandler.getInstance().addError(new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName()));
-					                        repeated=true;
-					                    }
+					                RecordField record=new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType());
+					                if(_localctx.records.contains(record)){
+					                    ErrorHandler.getInstance().addError(new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName()));
 					                }
-					                if(!repeated){
-					                    _localctx.records.add(new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType()));
+					                else{
+					                    _localctx.records.add(record);
 					                }
 					            }
 					        
