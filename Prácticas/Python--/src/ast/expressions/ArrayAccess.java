@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.Expression;
+import visitor.Visitor;
 
 public class ArrayAccess extends AbstractExpression{
     private Expression field;
@@ -17,5 +18,9 @@ public class ArrayAccess extends AbstractExpression{
 
     public Expression getName() {
         return name;
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

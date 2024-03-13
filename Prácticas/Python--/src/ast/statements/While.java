@@ -2,6 +2,7 @@ package ast.statements;
 
 import ast.Expression;
 import ast.Statement;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,5 +22,9 @@ public class While extends AbstractStatement{
 
     public List<Statement> getBody() {
         return body;
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

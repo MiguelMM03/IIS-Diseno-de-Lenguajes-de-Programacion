@@ -1,6 +1,7 @@
 package ast.statements;
 
 import ast.Expression;
+import visitor.Visitor;
 
 public class Asignment extends AbstractStatement{
     private Expression left;
@@ -17,5 +18,9 @@ public class Asignment extends AbstractStatement{
 
     public Expression getRight() {
         return right;
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

@@ -2,6 +2,7 @@ package ast.expressions;
 
 import ast.Expression;
 import ast.Statement;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +23,9 @@ public class FunctionCall extends AbstractExpression implements Statement {
 
     public List<Expression> getParams() {
         return params;
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

@@ -1,6 +1,11 @@
 package ast;
 
+import visitor.Visitor;
+
+import javax.swing.table.TableRowSorter;
+
 public interface ASTNode{
     public int getLine();
     public int getColumn();
+    <TP, TR> TR accept(Visitor<TP, TR> visitor, TP param);
 }
