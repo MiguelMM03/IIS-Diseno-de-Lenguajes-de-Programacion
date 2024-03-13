@@ -1,22 +1,27 @@
 package ast.types;
 
 import ast.Type;
+import semantic.Visitor;
 
 public class ArrayType extends AbstractType {
     private int size;
-    private Type type;
+    private Type of;
 
-    public ArrayType(int line, int column, int size, Type type) {
+    public ArrayType(int line, int column, int size, Type of) {
         super(line, column);
         this.size = size;
-        this.type = type;
+        this.of = of;
     }
 
     public int getSize() {
         return size;
     }
 
-    public Type getType() {
-        return type;
+    public Type isOf() {
+        return of;
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

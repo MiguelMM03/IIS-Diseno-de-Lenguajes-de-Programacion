@@ -4,6 +4,7 @@ import ast.ASTNode;
 import ast.AbstractASTNode;
 import ast.Type;
 import ast.definitions.VariableDef;
+import semantic.Visitor;
 
 public class RecordField extends AbstractASTNode {
     private String name;
@@ -33,5 +34,9 @@ public class RecordField extends AbstractASTNode {
 
         RecordField r = (RecordField) obj;
         return getName().equals(r.getName());
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

@@ -1,5 +1,7 @@
 package ast.types;
 
+import semantic.Visitor;
+
 public class VoidType extends AbstractType {
     private static VoidType simpleType;
     private VoidType() {
@@ -10,5 +12,9 @@ public class VoidType extends AbstractType {
             simpleType=new VoidType();
         }
         return simpleType;
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

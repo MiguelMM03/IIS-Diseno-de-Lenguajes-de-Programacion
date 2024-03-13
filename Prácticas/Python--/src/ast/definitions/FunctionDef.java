@@ -2,6 +2,7 @@ package ast.definitions;
 
 import ast.Statement;
 import ast.Type;
+import semantic.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,5 +23,9 @@ public class FunctionDef extends AbstractDefinition{
 
     public List<Statement> getBody() {
         return body;
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 }

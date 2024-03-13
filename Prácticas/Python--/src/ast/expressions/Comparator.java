@@ -1,7 +1,7 @@
 package ast.expressions;
 
 import ast.Expression;
-import visitor.Visitor;
+import semantic.Visitor;
 
 public class Comparator extends AbstractOperator{
 

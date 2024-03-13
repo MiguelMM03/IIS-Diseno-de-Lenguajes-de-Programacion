@@ -1,6 +1,7 @@
 package ast.definitions;
 
 import ast.Type;
+import semantic.Visitor;
 
 public class VariableDef extends AbstractDefinition{
 
@@ -19,6 +20,10 @@ public class VariableDef extends AbstractDefinition{
 
         VariableDef v = (VariableDef) obj;
         return super.getName().equals(v.getName());
+    }
+    @Override
+    public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
+        return visitor.visit(this,param);
     }
 
 }

@@ -1,6 +1,6 @@
 package ast.expressions;
 
-import visitor.Visitor;
+import semantic.Visitor;
 
 public class DoubleLiteral extends AbstractExpression {
 

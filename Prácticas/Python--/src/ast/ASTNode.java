@@ -1,8 +1,6 @@
 package ast;
 
-import visitor.Visitor;
-
-import javax.swing.table.TableRowSorter;
+import semantic.Visitor;
 
 public interface ASTNode{
     public int getLine();
