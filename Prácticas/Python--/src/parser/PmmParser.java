@@ -1344,7 +1344,7 @@ public class PmmParser extends Parser {
 						((ExpressionContext)_localctx).e2 = expression(0);
 						setState(311);
 						match(T__17);
-						((ExpressionContext)_localctx).ast = new ArrayAccess(((ExpressionContext)_localctx).e2.ast.getLine(),((ExpressionContext)_localctx).e2.ast.getColumn()+1,((ExpressionContext)_localctx).e1.ast,((ExpressionContext)_localctx).e2.ast);
+						((ExpressionContext)_localctx).ast = new ArrayAccess(((ExpressionContext)_localctx).e1.ast.getLine(),((ExpressionContext)_localctx).e2.ast.getColumn()+1,((ExpressionContext)_localctx).e1.ast,((ExpressionContext)_localctx).e2.ast);
 						}
 						break;
 					case 7:

@@ -2,7 +2,7 @@ package ast;
 
 import semantic.Visitor;
 
-public class AbstractASTNode implements ASTNode{
+public abstract class AbstractASTNode implements ASTNode{
     private int line;
     private int column;
     public AbstractASTNode(int line, int column){
