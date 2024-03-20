@@ -50,6 +50,7 @@ public class AbstractVisitor implements Visitor<Void,Void>{
 
     @Override
     public Void visit(FunctionCall ast, Void param) {
+        ast.getName().accept(this,param);
         for(Expression e:ast.getParams()){
             e.accept(this,param);
         }

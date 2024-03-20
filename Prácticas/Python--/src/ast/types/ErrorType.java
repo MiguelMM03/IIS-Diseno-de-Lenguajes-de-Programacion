@@ -1,5 +1,6 @@
 package ast.types;
 
+import errorhandler.ErrorHandler;
 import semantic.Visitor;
 
 public class ErrorType extends AbstractType{
@@ -7,6 +8,7 @@ public class ErrorType extends AbstractType{
     public ErrorType(int line, int column, String message) {
         super(line, column);
         this.message=message;
+        ErrorHandler.getInstance().addError(this);
     }
 
     public String toString(){

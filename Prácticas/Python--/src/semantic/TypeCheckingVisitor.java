@@ -106,7 +106,7 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     public Void visit(Asignment ast, Void param) {
         ast.getLeft().accept(this,param);
         if(!ast.getLeft().getLValue()){
-            ErrorHandler.getInstance().addError(new ErrorType(ast.getLeft().getLine(),ast.getLeft().getColumn()+1,"Expression is not a LValue"));
+            new ErrorType(ast.getLeft().getLine(),ast.getLeft().getColumn()+1,"Expression is not a LValue");
         }
         return null;
     }
@@ -121,7 +121,7 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     public Void visit(Input ast, Void param) {
         ast.getExpression().accept(this,param);
         if(!ast.getExpression().getLValue()){
-            ErrorHandler.getInstance().addError(new ErrorType(ast.getExpression().getLine(),ast.getExpression().getColumn()+1,"Expression is not a LValue"));
+           new ErrorType(ast.getExpression().getLine(),ast.getExpression().getColumn()+1,"Expression is not a LValue");
         }
         return null;
     }
