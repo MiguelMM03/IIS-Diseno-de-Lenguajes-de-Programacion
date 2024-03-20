@@ -30,4 +30,9 @@ public class AbstractDefinition extends AbstractASTNode implements Definition {
     public int getScope() {
         return scope;
     }
+
+    @Override
+    public void setScope(int scope) {
+        this.scope=scope;
+    }
 }

@@ -8,6 +8,8 @@ public class SymbolTable {
 	private int scope=0;
 	private List<Map<String,Definition>> table;
 	public SymbolTable()  {
+		table=new ArrayList<>();
+		table.add(new HashMap<>());
 	}
 
 	public void set() {
@@ -25,11 +27,12 @@ public class SymbolTable {
 			return false;
 		}
 		table.get(scope).put(definition.getName(),definition);
+		definition.setScope(scope);
 		return true;
 	}
 	
 	public Definition find(String id) {
-		for(int i=scope;i>0;i++){
+		for(int i=scope;i>=0;i--){
 			if(table.get(i).containsKey(id)){
 				return table.get(i).get(id);
 			}
