@@ -7,6 +7,7 @@ import ast.Type;
 public class AbstractDefinition extends AbstractASTNode implements Definition {
     private String name;
     private Type type;
+    private int scope;
 
     public AbstractDefinition(int line, int column, String name, Type type) {
         super(line,column);
@@ -23,5 +24,10 @@ public class AbstractDefinition extends AbstractASTNode implements Definition {
     @Override
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public int getScope() {
+        return scope;
     }
 }
