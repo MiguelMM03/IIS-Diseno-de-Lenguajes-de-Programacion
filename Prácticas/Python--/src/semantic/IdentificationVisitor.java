@@ -17,10 +17,11 @@ public class IdentificationVisitor extends AbstractVisitor {
 
     @Override
     public Void visit(Variable ast, Void param) {
-        if(symbolTable.find(ast.getName())==null){
+        Definition def = symbolTable.find(ast.getName());
+        if(def==null){
             new ErrorType(ast.getLine(),ast.getColumn()+1,"Variable not defined");
         }
-        ast.setDefinition(symbolTable.find(ast.getName()));
+        ast.setDefinition(def);
         return null;
     }
     @Override
@@ -42,10 +43,10 @@ public class IdentificationVisitor extends AbstractVisitor {
 
     @Override
     public Void visit(VariableDef ast, Void param) {
-        ast.getType().accept(this,param);
         if(!symbolTable.insert(ast)){
             new ErrorType(ast.getLine(),ast.getColumn()+1,"Variable definition repeated");
         }
+        ast.getType().accept(this,param);
         return null;
     }
 }

@@ -93,12 +93,19 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     @Override
     public Void visit(Asignment ast, Void param) {
         ast.getLeft().accept(this,param);
+        ast.getRight().accept(this,param);
         return null;
     }
 
     @Override
     public Void visit(Conditional ast, Void param) {
         ast.getCondition().accept(this,param);
+        for(Statement st:ast.getBodyIf()){
+            st.accept(this,param);
+        }
+        for(Statement st:ast.getBodyElse()){
+            st.accept(this,param);
+        }
         return null;
     }
 
@@ -123,6 +130,9 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     @Override
     public Void visit(While ast, Void param) {
         ast.getCondition().accept(this,param);
+        for(Statement def: ast.getBody()){
+            def.accept(this,param);
+        }
         return null;
     }
 
@@ -149,10 +159,10 @@ public class AbstractVisitor implements Visitor<Void,Void>{
 
     @Override
     public Void visit(FunctionType ast, Void param) {
+        ast.getReturnType().accept(this,param);
         for(VariableDef def:ast.getParams()){
             def.accept(this,param);
         }
-        ast.getReturnType().accept(this,param);
         return null;
     }
 
@@ -169,6 +179,9 @@ public class AbstractVisitor implements Visitor<Void,Void>{
 
     @Override
     public Void visit(StructType ast, Void param) {
+        for(RecordField def:ast.getRecordFields()){
+            def.accept(this,param);
+        }
         return null;
     }
 

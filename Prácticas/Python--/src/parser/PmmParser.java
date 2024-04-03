@@ -422,7 +422,7 @@ public class PmmParser extends Parser {
 
 			                VariableDef var=new VariableDef(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null),null);
 			                if(_localctx.vars.contains(var)){
-			                    ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null)));
+			                    new ErrorType(((Var_definition_auxContext)_localctx).id1.getLine(),((Var_definition_auxContext)_localctx).id1.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id1!=null?((Var_definition_auxContext)_localctx).id1.getText():null));
 			                }else{
 			                    _localctx.vars.add(var);
 			                }
@@ -440,7 +440,7 @@ public class PmmParser extends Parser {
 
 				                var=new VariableDef(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null),null);
 				                if(_localctx.vars.contains(var)){
-				                     ErrorHandler.getInstance().addError(new ErrorType(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null)));
+				                     new ErrorType(((Var_definition_auxContext)_localctx).id2.getLine(),((Var_definition_auxContext)_localctx).id2.getCharPositionInLine()+1,"Variable repeated: "+(((Var_definition_auxContext)_localctx).id2!=null?((Var_definition_auxContext)_localctx).id2.getText():null));
 				                }
 				                else{
 				                    _localctx.vars.add(var);
@@ -1344,7 +1344,7 @@ public class PmmParser extends Parser {
 						((ExpressionContext)_localctx).e2 = expression(0);
 						setState(311);
 						match(T__17);
-						((ExpressionContext)_localctx).ast = new ArrayAccess(((ExpressionContext)_localctx).e1.ast.getLine(),((ExpressionContext)_localctx).e2.ast.getColumn()+1,((ExpressionContext)_localctx).e1.ast,((ExpressionContext)_localctx).e2.ast);
+						((ExpressionContext)_localctx).ast = new ArrayAccess(((ExpressionContext)_localctx).e2.ast.getLine(),((ExpressionContext)_localctx).e2.ast.getColumn()+1,((ExpressionContext)_localctx).e1.ast,((ExpressionContext)_localctx).e2.ast);
 						}
 						break;
 					case 7:
@@ -1475,7 +1475,7 @@ public class PmmParser extends Parser {
 					            for(VariableDef vdef:((TypeContext)_localctx).v.ast){
 					                RecordField record=new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType());
 					                if(_localctx.records.contains(record)){
-					                    ErrorHandler.getInstance().addError(new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName()));
+					                    new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName());
 					                }
 					                else{
 					                    _localctx.records.add(record);

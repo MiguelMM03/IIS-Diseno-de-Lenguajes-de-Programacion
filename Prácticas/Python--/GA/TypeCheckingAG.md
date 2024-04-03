@@ -68,13 +68,13 @@
         
     (16) expression.type = expression.definition.type
 
-    (17) expression1.type.promotesTo(expression2.type, expression1)
+    (17) expression2.type.promotesTo(expression1.type, expression1)
     
     (18) expression.type.asLogical()
 
-    (19) expression.asBuildInType(statement)
+    (19) expression.asBuiltInType(statement)
 
-    (20) expression.asBuildInType(statement)
+    (20) expression.asBuiltInType(statement)
 
     (21)
 

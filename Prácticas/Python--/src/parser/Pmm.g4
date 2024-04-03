@@ -27,7 +27,7 @@ var_definition_aux returns[List<VariableDef> ast = new ArrayList<VariableDef>()]
             id1=ID{
                 VariableDef var=new VariableDef($id1.getLine(),$id1.getCharPositionInLine()+1,$id1.text,null);
                 if($vars.contains(var)){
-                    ErrorHandler.getInstance().addError(new ErrorType($id1.getLine(),$id1.getCharPositionInLine()+1,"Variable repeated: "+$id1.text));
+                    new ErrorType($id1.getLine(),$id1.getCharPositionInLine()+1,"Variable repeated: "+$id1.text);
                 }else{
                     $vars.add(var);
                 }
@@ -35,7 +35,7 @@ var_definition_aux returns[List<VariableDef> ast = new ArrayList<VariableDef>()]
             (','id2=ID{
                 var=new VariableDef($id2.getLine(),$id2.getCharPositionInLine()+1,$id2.text,null);
                 if($vars.contains(var)){
-                     ErrorHandler.getInstance().addError(new ErrorType($id2.getLine(),$id2.getCharPositionInLine()+1,"Variable repeated: "+$id2.text));
+                     new ErrorType($id2.getLine(),$id2.getCharPositionInLine()+1,"Variable repeated: "+$id2.text);
                 }
                 else{
                     $vars.add(var);
@@ -101,7 +101,7 @@ type returns [Type ast] locals[List<RecordField> records=new ArrayList<>()]:
             for(VariableDef vdef:$v.ast){
                 RecordField record=new RecordField(vdef.getLine(), vdef.getColumn()+1, vdef.getName(),vdef.getType());
                 if($records.contains(record)){
-                    ErrorHandler.getInstance().addError(new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName()));
+                    new ErrorType(vdef.getLine(),vdef.getColumn()+1,"Struct field repeated: "+vdef.getName());
                 }
                 else{
                     $records.add(record);

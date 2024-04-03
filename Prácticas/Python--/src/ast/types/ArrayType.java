@@ -1,5 +1,6 @@
 package ast.types;
 
+import ast.ASTNode;
 import ast.Type;
 import semantic.Visitor;
 
@@ -23,5 +24,17 @@ public class ArrayType extends AbstractType {
     @Override
     public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
         return visitor.visit(this,param);
+    }
+    @Override
+    public Type squareBrackets(Type type, ASTNode ast) {
+        Type t=type.promotesTo(IntType.getInstance(),ast);
+        if (t instanceof ErrorType) {
+            return super.squareBrackets(type, ast);
+        }
+        return t;
+    }
+    @Override
+    public String toString() {
+        return "ArrayType";
     }
 }

@@ -1,5 +1,7 @@
 package ast.types;
 
+import ast.ASTNode;
+import ast.Type;
 import semantic.Visitor;
 
 import java.util.ArrayList;
@@ -19,5 +21,19 @@ public class StructType extends AbstractType {
     @Override
     public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
         return visitor.visit(this,param);
+    }
+    @Override
+    public Type dot(String field, ASTNode ast) {
+        for (RecordField recordField : recordFields) {
+            if (recordField.getName().equals(field)) {
+                return recordField.getType();
+            }
+        }
+        return new ErrorType(ast.getLine(),ast.getColumn(),"Field "+field+" cannot be accessed from "+this);
+
+    }
+    @Override
+    public String toString() {
+        return "StructType";
     }
 }

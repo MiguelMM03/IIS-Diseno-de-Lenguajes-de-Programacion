@@ -2,19 +2,23 @@ package ast.types;
 
 import semantic.Visitor;
 
-public class VoidType extends AbstractType {
-    private static VoidType simpleType;
+public class VoidType extends SimpleType {
+    private static VoidType instance;
     private VoidType() {
         super(0, 0);
     }
     public static VoidType getInstance(){
-        if(simpleType==null){
-            simpleType=new VoidType();
+        if(instance==null){
+            instance=new VoidType();
         }
-        return simpleType;
+        return instance;
     }
     @Override
     public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
         return visitor.visit(this,param);
+    }
+    @Override
+    public String toString() {
+        return "VoidType";
     }
 }
