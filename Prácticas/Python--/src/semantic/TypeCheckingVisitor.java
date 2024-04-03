@@ -24,9 +24,9 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     @Override
     public Void visit(ArrayAccess ast, Void param) {
         ast.setLValue(true);
-        ast.setType(ast.getName().getType().squareBrackets(ast.getField().getType(),ast));
         ast.getName().accept(this,param);
         ast.getField().accept(this,param);
+        ast.setType(ast.getName().getType().squareBrackets(ast.getField().getType(),ast));
         return null;
     }
 
@@ -47,9 +47,9 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     @Override
     public Void visit(Comparator ast, Void param) {
         ast.setLValue(false);
-        ast.setType(ast.getOp1().getType().comparison(ast.getOp2().getType(),ast));
         ast.getOp1().accept(this,param);
         ast.getOp2().accept(this,param);
+        ast.setType(ast.getOp1().getType().comparison(ast.getOp2().getType(),ast));
         return null;
     }
 
@@ -81,9 +81,9 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     @Override
     public Void visit(Logical ast, Void param) {
         ast.setLValue(false);
-        ast.setType(ast.getOp1().getType().logic(ast.getOp2().getType(),ast));
         ast.getOp1().accept(this,param);
         ast.getOp2().accept(this,param);
+        ast.setType(ast.getOp1().getType().logic(ast.getOp2().getType(),ast));
         return null;
     }
 
@@ -98,14 +98,16 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     @Override
     public Void visit(UnaryMinus ast, Void param) {
         ast.setLValue(false);
-        ast.getType().arithmetic(ast);
+        ast.getExpression().accept(this,param);
+        ast.setType(ast.getExpression().getType().arithmetic(ast));
         return null;
     }
 
     @Override
     public Void visit(UnaryNot ast, Void param) {
         ast.setLValue(false);
-        ast.getType().logic(ast);
+        ast.getExpression().accept(this,param);
+        ast.setType(ast.getExpression().getType().logic(ast));
         return null;
     }
 
@@ -131,7 +133,13 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     @Override
     public Void visit(Conditional ast, Void param) {
         ast.getCondition().accept(this,param);
-        ast.getCondition().getType().asLogical(ast);
+        ast.getCondition().setType(ast.getCondition().getType().asLogical(ast));
+        for(Statement def: ast.getBodyIf()){
+            def.accept(this,param);
+        }
+        for(Statement def: ast.getBodyElse()){
+            def.accept(this,param);
+        }
         return null;
     }
 
@@ -155,7 +163,11 @@ public class TypeCheckingVisitor extends AbstractVisitor{
     @Override
     public Void visit(While ast, Void param) {
         ast.getCondition().accept(this,param);
-        ast.getCondition().getType().asLogical(ast);
+        ast.getCondition().setType(ast.getCondition().getType().asLogical(ast));
+        for(Statement def: ast.getBody()){
+            def.accept(this,param);
+        }
+
         return null;
     }
 

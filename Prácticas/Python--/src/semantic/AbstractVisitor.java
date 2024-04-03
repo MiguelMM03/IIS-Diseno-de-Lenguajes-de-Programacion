@@ -77,11 +77,13 @@ public class AbstractVisitor implements Visitor<Void,Void>{
 
     @Override
     public Void visit(UnaryMinus ast, Void param) {
+        ast.getExpression().accept(this,param);
         return null;
     }
 
     @Override
     public Void visit(UnaryNot ast, Void param) {
+        ast.getExpression().accept(this,param);
         return null;
     }
 

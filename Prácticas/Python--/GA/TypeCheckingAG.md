@@ -62,9 +62,9 @@
     
     (13) expression1.type = expression2.type.dot(expression3, expression1)
     
-    (14) expression1.type.arithmetic(expression2.type)
+    (14) expression1.type = expression2.type.arithmetic(expression1)
         
-    (15) expression1.type.logic(expression2.type)
+    (15) expression1.type = expression2.type.logic(expression1)
         
     (16) expression.type = expression.definition.type
 

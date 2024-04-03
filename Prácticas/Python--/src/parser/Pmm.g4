@@ -83,8 +83,8 @@ expression returns [Expression ast] locals [List<Expression> params=new ArrayLis
         |   e1=expression'['e2=expression']'{$ast=new ArrayAccess($e2.ast.getLine(),$e2.ast.getColumn()+1,$e1.ast,$e2.ast);}
         |   e=expression'.'ID{$ast=new StructAccess($ID.getLine(), $ID.getCharPositionInLine()+1,$e.ast,$ID.text);}
         |   '('t=type')'e=expression {$ast=new Cast($t.ast.getLine(),$t.ast.getColumn()+1,$e.ast,$t.ast);}
-        |   OP='-'e=expression{$ast=new UnaryMinus($OP.getLine(),$OP.getCharPositionInLine()+1);}
-        |   OP='!'expression{$ast=new UnaryNot($OP.getLine(),$OP.getCharPositionInLine()+1);}
+        |   OP='-'e=expression{$ast=new UnaryMinus($OP.getLine(),$OP.getCharPositionInLine()+1,$e.ast);}
+        |   OP='!'e=expression{$ast=new UnaryNot($OP.getLine(),$OP.getCharPositionInLine()+1,$e.ast);}
         |   e1=expression OP=('*'|'/'|'%') e2=expression{$ast=new Arithmetic($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
         |   e1=expression OP=('+'|'-') e2=expression{$ast=new Arithmetic($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
         |   e1=expression OP=('>'|'>'|'='|'<'|'<='|'>='|'!='|'==') e2=expression{$ast=new Comparator($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}

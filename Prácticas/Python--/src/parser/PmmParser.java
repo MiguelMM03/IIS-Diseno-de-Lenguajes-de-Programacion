@@ -1172,7 +1172,7 @@ public class PmmParser extends Parser {
 				((ExpressionContext)_localctx).OP = match(T__19);
 				setState(262);
 				((ExpressionContext)_localctx).e = expression(6);
-				((ExpressionContext)_localctx).ast = new UnaryMinus(((ExpressionContext)_localctx).OP.getLine(),((ExpressionContext)_localctx).OP.getCharPositionInLine()+1);
+				((ExpressionContext)_localctx).ast = new UnaryMinus(((ExpressionContext)_localctx).OP.getLine(),((ExpressionContext)_localctx).OP.getCharPositionInLine()+1,((ExpressionContext)_localctx).e.ast);
 				}
 				break;
 			case 8:
@@ -1180,8 +1180,8 @@ public class PmmParser extends Parser {
 				setState(265);
 				((ExpressionContext)_localctx).OP = match(T__20);
 				setState(266);
-				expression(5);
-				((ExpressionContext)_localctx).ast = new UnaryNot(((ExpressionContext)_localctx).OP.getLine(),((ExpressionContext)_localctx).OP.getCharPositionInLine()+1);
+				((ExpressionContext)_localctx).e = expression(5);
+				((ExpressionContext)_localctx).ast = new UnaryNot(((ExpressionContext)_localctx).OP.getLine(),((ExpressionContext)_localctx).OP.getCharPositionInLine()+1,((ExpressionContext)_localctx).e.ast);
 				}
 				break;
 			}

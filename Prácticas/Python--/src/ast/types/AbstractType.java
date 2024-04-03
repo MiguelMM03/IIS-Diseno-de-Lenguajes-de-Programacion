@@ -41,7 +41,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
 
     @Override
     public Type logic(Type type, ASTNode ast) {
-        if (type.asLogical(ast) instanceof ErrorType)
+        if (type instanceof ErrorType)
             return type;
         return new ErrorType(ast.getLine(),ast.getColumn(),"Logic operation cannot be done with "+this+" and "+type);
     }

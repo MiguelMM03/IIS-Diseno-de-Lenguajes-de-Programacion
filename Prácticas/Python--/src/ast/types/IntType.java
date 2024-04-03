@@ -41,6 +41,18 @@ public class IntType extends SimpleType {
         return t;
     }
     @Override
+    public Type logic(Type type, ASTNode ast) {
+        Type t=instance.promotesTo(type, ast);
+        if(t instanceof ErrorType){
+            return super.logic(type, ast);
+        }
+        return t;
+    }
+    @Override
+    public Type logic(ASTNode ast) {
+        return instance;
+    }
+    @Override
     public String toString() {
         return "IntType";
     }
