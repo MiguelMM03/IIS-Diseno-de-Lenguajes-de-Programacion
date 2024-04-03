@@ -1,18 +1,3 @@
-## Gramática atribuida que calcula el atributo "definition" para las "Variable".
-
-### A
-    Variable.definition : Definition
-
-### R
-    //Reglas para las Variable
-        if(symbolTable.find(Variable.getName())){
-            Variable.setDefinition(symbolTable.find(Variable.getName()));
-        }
-    //Reglas para las VariableDef
-        symbolTable.insert(VariableDef)
-    //Reglas para las FunctionDef
-        ¿Modificar ámbito?
-        
 ## Gramática atribuida para realizar toda la comprobación de tipos del lenguaje 
 ### G
 
@@ -30,9 +15,9 @@
     (10) FunctionCall: expression1 → variable expression2*
     (11) IntLiteral: expression → INT_LITERAL
     (12) Logical: expression1 → expression2 ('&&'|'||') expression3
-    (13) StructAccess: expression1 → expression2 '.' ID
-    (14) UnaryMinus: expression1 → '-' expression2
-    (15) UnaryNot: expression1 → '!' expression2
+    (13) StructAccess: expression1 → expression2  ID
+    (14) UnaryMinus: expression1 →  expression2
+    (15) UnaryNot: expression1 →  expression2
     (16) Variable: expression → ID
 
     (17) Asignment: statement → expression1 expression2
@@ -48,49 +33,52 @@
     (26) ArrayType: type → type [ INT_CONSTANT ]
     (27) RecordType: type → field*
     (28) RecordField: field → type ID
-    (29) FunctionType: type → type vardefinition*_
+    (29) FunctionType: type → type vardefinition*
 ### A
     Expression.type : Type
 
 ### R
+    (1)
+    (2)
+    (3)
 
-    (4) expression1.type = expression2.type.arithmetic(expression3.type)
+    (4) expression1.type = expression2.type.arithmetic(expression3.type, expression1)
 
-    (5) expression1.type = expression2.type.squareBrackets(expression3.type)
+    (5) expression1.type = expression2.type.squareBrackets(expression3.type, expression1)
 
-    (6) expression1.type = expression2.type.canBeCastTo(type)
+    (6) expression1.type = expression2.type.canBeCastTo(type, expression1)
     
-    (7) expression.type = CharType
+    (7) expression.type = CharType.getInstance()
     
-    (8) expression1.type = expression2.type.comparison(expression3.type)
+    (8) expression1.type = expression2.type.comparison(expression3.type, expression1)
     
-    (9) expression.type = RealType
+    (9) expression.type = RealType.getInstance()
     
-    (10) expression1.type = variable.type.parenthesis(expression2*)
+    (10) expression1.type = variable.type.parenthesis(expression2*, expression1)
     
-    (11) expression.type = IntType
+    (11) expression.type = IntType.getInstance()
     
-    (12) expression1.type = expression2.type.logic(expression3.type)
+    (12) expression1.type = expression2.type.logic(expression3.type, expression1)
     
-    (13) expression1.type = expression2.type.dot(expression3)
+    (13) expression1.type = expression2.type.dot(expression3, expression1)
     
-    (14) expression1.type = expression2.type
+    (14) expression1.type.arithmetic(expression2.type)
         
-    (15) expression1.type = expression2.type
+    (15) expression1.type.logic(expression2.type)
         
-    (16)
+    (16) expression.type = expression.definition.type
 
-    (17)
+    (17) expression1.type.promotesTo(expression2.type, expression1)
     
-    (18)
+    (18) expression.type.asLogical()
 
-    (19)
+    (19) expression.asBuildInType(statement)
 
-    (20)
+    (20) expression.asBuildInType(statement)
 
     (21)
 
-    (22)
+    (22) expression.type.asLogical()
 
     (23)
 
