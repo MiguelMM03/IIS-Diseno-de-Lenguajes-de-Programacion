@@ -1,9 +1,9 @@
 ## Gramática atribuida que calcula el atributo "definition" para las "Variable".
 
-A{
+### A
     Variable.definition : Definition
-}
-R{
+
+### R
     //Reglas para las Variable
         if(symbolTable.find(Variable.getName())){
             Variable.setDefinition(symbolTable.find(Variable.getName()));
@@ -13,4 +13,3 @@ R{
     //Reglas para las FunctionDef
         ¿Modificar ámbito?
         
-}
