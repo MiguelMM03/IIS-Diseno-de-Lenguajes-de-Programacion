@@ -22,11 +22,10 @@ public class CharType extends SimpleType {
     }
     @Override
     public Type arithmetic(Type type, ASTNode ast) {
-        Type t=instance.promotesTo(type, ast);
-        if(t instanceof ErrorType){
-            return super.arithmetic(type, ast);
+        if (type instanceof IntType || type instanceof CharType) {
+            return IntType.getInstance();
         }
-        return t;
+        return super.arithmetic(type, ast);
     }
     @Override
     public Type comparison(Type type, ASTNode ast) {

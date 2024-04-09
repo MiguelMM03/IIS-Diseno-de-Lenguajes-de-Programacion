@@ -36,7 +36,7 @@ public interface Visitor <TP,TR>{
     TR visit(RecordField ast, TP param);
     TR visit(StructType ast, TP param);
     TR visit(VoidType ast, TP param);
-    TR visit(Program ast, TP param);
     TR visit(FunctionDef ast, TP param);
     TR visit(VariableDef ast, TP param);
+    TR visit(Program ast, TP param);
 }

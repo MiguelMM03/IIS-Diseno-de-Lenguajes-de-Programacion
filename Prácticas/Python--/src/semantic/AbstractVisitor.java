@@ -9,47 +9,46 @@ import ast.definitions.VariableDef;
 import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
-import errorhandler.ErrorHandler;
 
-public class AbstractVisitor implements Visitor<Void,Void>{
+public abstract class AbstractVisitor<TP,TR> implements Visitor<TP,TR>{
     @Override
-    public Void visit(Arithmetic ast, Void param) {
+    public TR visit(Arithmetic ast, TP param) {
         ast.getOp1().accept(this,param);
         ast.getOp2().accept(this, param);
         return null;
     }
 
     @Override
-    public Void visit(ArrayAccess ast, Void param) {
+    public TR visit(ArrayAccess ast, TP param) {
         ast.getName().accept(this,param);
         ast.getField().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(Cast ast, Void param) {
+    public TR visit(Cast ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(CharLiteral ast, Void param) {
+    public TR visit(CharLiteral ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(Comparator ast, Void param) {
+    public TR visit(Comparator ast, TP param) {
         ast.getOp1().accept(this,param);
         ast.getOp2().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(DoubleLiteral ast, Void param) {
+    public TR visit(DoubleLiteral ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(FunctionCall ast, Void param) {
+    public TR visit(FunctionCall ast, TP param) {
         ast.getName().accept(this,param);
         for(Expression e:ast.getParams()){
             e.accept(this,param);
@@ -58,49 +57,49 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     }
 
     @Override
-    public Void visit(IntLiteral ast, Void param) {
+    public TR visit(IntLiteral ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(Logical ast, Void param) {
+    public TR visit(Logical ast, TP param) {
         ast.getOp1().accept(this,param);
         ast.getOp2().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(StructAccess ast, Void param) {
+    public TR visit(StructAccess ast, TP param) {
         ast.getName().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(UnaryMinus ast, Void param) {
+    public TR visit(UnaryMinus ast, TP param) {
         ast.getExpression().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(UnaryNot ast, Void param) {
+    public TR visit(UnaryNot ast, TP param) {
         ast.getExpression().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(Variable ast, Void param) {
+    public TR visit(Variable ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(Asignment ast, Void param) {
+    public TR visit(Asignment ast, TP param) {
         ast.getLeft().accept(this,param);
         ast.getRight().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(Conditional ast, Void param) {
+    public TR visit(Conditional ast, TP param) {
         ast.getCondition().accept(this,param);
         for(Statement st:ast.getBodyIf()){
             st.accept(this,param);
@@ -112,25 +111,25 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     }
 
     @Override
-    public Void visit(Input ast, Void param) {
+    public TR visit(Input ast, TP param) {
         ast.getExpression().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(Print ast, Void param) {
+    public TR visit(Print ast, TP param) {
         ast.getExpression().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(Return ast, Void param) {
+    public TR visit(Return ast, TP param) {
         ast.getExpression().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(While ast, Void param) {
+    public TR visit(While ast, TP param) {
         ast.getCondition().accept(this,param);
         for(Statement def: ast.getBody()){
             def.accept(this,param);
@@ -139,28 +138,28 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     }
 
     @Override
-    public Void visit(ArrayType ast, Void param) {
+    public TR visit(ArrayType ast, TP param) {
         ast.isOf().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(CharType ast, Void param) {
+    public TR visit(CharType ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(DoubleType ast, Void param) {
+    public TR visit(DoubleType ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(ErrorType ast, Void param) {
+    public TR visit(ErrorType ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(FunctionType ast, Void param) {
+    public TR visit(FunctionType ast, TP param) {
         ast.getReturnType().accept(this,param);
         for(VariableDef def:ast.getParams()){
             def.accept(this,param);
@@ -169,18 +168,18 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     }
 
     @Override
-    public Void visit(IntType ast, Void param) {
+    public TR visit(IntType ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(RecordField ast, Void param) {
+    public TR visit(RecordField ast, TP param) {
         ast.getType().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(StructType ast, Void param) {
+    public TR visit(StructType ast, TP param) {
         for(RecordField def:ast.getRecordFields()){
             def.accept(this,param);
         }
@@ -188,12 +187,12 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     }
 
     @Override
-    public Void visit(VoidType ast, Void param) {
+    public TR visit(VoidType ast, TP param) {
         return null;
     }
 
     @Override
-    public Void visit(FunctionDef ast, Void param) {
+    public TR visit(FunctionDef ast, TP param) {
         ast.getType().accept(this,param);
         for(VariableDef def:ast.getVars()){
             def.accept(this,param);
@@ -205,13 +204,13 @@ public class AbstractVisitor implements Visitor<Void,Void>{
     }
 
     @Override
-    public Void visit(VariableDef ast, Void param) {
+    public TR visit(VariableDef ast, TP param) {
         ast.getType().accept(this,param);
         return null;
     }
 
     @Override
-    public Void visit(Program ast, Void param) {
+    public TR visit(Program ast, TP param) {
         for(Definition def:ast.getDefinitions()) {
             def.accept(this, param);
         }

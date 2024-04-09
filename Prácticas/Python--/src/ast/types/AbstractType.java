@@ -55,6 +55,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     public Type promotesTo(Type type, ASTNode ast) {
         if (type instanceof ErrorType)
             return type;
+        if(this instanceof ErrorType)
+            return this;
         return new ErrorType(ast.getLine(),ast.getColumn(),"Cannot promote "+this+" to "+type);
     }
 

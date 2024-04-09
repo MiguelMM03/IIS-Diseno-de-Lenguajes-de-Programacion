@@ -12,7 +12,7 @@ import ast.types.*;
 import errorhandler.ErrorHandler;
 import symboltable.SymbolTable;
 
-public class IdentificationVisitor extends AbstractVisitor {
+public class IdentificationVisitor extends AbstractVisitor<Void,Void> {
     private final SymbolTable symbolTable=new SymbolTable();
 
     @Override
