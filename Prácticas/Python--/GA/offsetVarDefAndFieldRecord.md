@@ -1,6 +1,5 @@
-## Gramática atribuida para realizar toda la comprobación de tipos del lenguaje 
+## Gramática atribuida para calcular el offset de VarDefinition y FieldRecord
 ### G
-
     (1) Program: program → vardefinition* functiondefinition*
 
     (2) VarDefinition: vardefinition → type ID
@@ -34,62 +33,54 @@
     (27) StructType: type → field*
     (28) RecordField: field → type ID
     (29) FunctionType: type → type vardefinition*
+
 ### A
-    Expression.type : Type
+    Definition.offset : int
+    field.offset : int
 
 ### R
-    (1)
-    (2)
-    (3)
+    (1) int offset = 0;
+        for (int i = 0; i < vardefinition*.size; i++)
+            vardefinition*[i].offset = offset
+            offset += vardefinition*[i].type.numberOfBytes()
+    (2) 
+    (3) int offset = -4;
+        for (int i = 0; i < vardefinition*.size; i++)
+            vardefinition*[i].offset = offset 
+            offset -= vardefinition*[i].type.numberOfBytes()
 
-    (4) expression1.type = expression2.type.arithmetic(expression3.type, expression1)
+    (4) 
+    (5)
+    (6)
+    (7)
+    (8)
+    (9)
+    (10)
+    (11)
+    (12) 
+    (13)
+    (14)
+    (15)
+    (16)
 
-    (5) expression1.type = expression2.type.squareBrackets(expression3.type, expression1)
-
-    (6) expression1.type = expression2.type.canBeCastTo(type, expression1)
-    
-    (7) expression.type = CharType.getInstance()
-    
-    (8) expression1.type = expression2.type.comparison(expression3.type, expression1)
-    
-    (9) expression.type = RealType.getInstance()
-    
-    (10) expression1.type = variable.type.parenthesis(expression2*, expression1)
-    
-    (11) expression.type = IntType.getInstance()
-    
-    (12) expression1.type = expression2.type.logic(expression3.type, expression1)
-    
-    (13) expression1.type = expression2.type.dot(expression3, expression1)
-    
-    (14) expression1.type = expression2.type.arithmetic(expression1)
-        
-    (15) expression1.type = expression2.type.logic(expression1)
-        
-    (16) expression.type = expression.definition.type
-
-    (17) expression2.type.promotesTo(expression1.type, expression1)
-    
-    (18) expression.type.asLogical()
-
-    (19) expression.asBuiltInType(statement)
-
-    (20) expression.asBuiltInType(statement)
-
+    (17)
+    (18)
+    (19)
+    (20)
     (21)
-
-    (22) expression.type.asLogical()
+    (22)
 
     (23)
-
     (24)
-
     (25)
-
     (26)
+    (27) int offset=0;
+         for (int i = 0; i < field*.size; i++)
+            field*[i].offset = offset
+            offset += field*[i].type.numberOfBytes()
+    (28) 
+    (29) int offset = +4; 
+         for (int i = vardefinition*.size; i > 0; i--)
+            vardefinition*[i].offset = offset;
+            offset += vardefinition*[i].type.numberOfBytes()
 
-    (27)
-
-    (28)
-
-    (29)

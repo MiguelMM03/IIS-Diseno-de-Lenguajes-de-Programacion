@@ -15,4 +15,5 @@ public interface Type extends ASTNode {
     Type squareBrackets(Type type,ASTNode ast);
     Type dot(String field,ASTNode ast);
     Type parenthesis(List<Type> types, ASTNode ast);
+    int numberOfBytes();
 }

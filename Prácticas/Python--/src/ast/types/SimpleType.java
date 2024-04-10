@@ -3,7 +3,7 @@ package ast.types;
 import ast.ASTNode;
 import ast.Type;
 
-public class SimpleType extends AbstractType{
+public abstract class SimpleType extends AbstractType{
 
     public SimpleType(int line, int column) {
         super(line, column);

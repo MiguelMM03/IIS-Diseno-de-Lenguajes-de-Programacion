@@ -43,6 +43,14 @@ public class FunctionType extends AbstractType  {
         return returnType;
     }
     @Override
+    public int numberOfBytes() {
+        int numberOfBytes=0;
+        for(VariableDef param:params){
+            numberOfBytes+=param.getType().numberOfBytes();
+        }
+        return numberOfBytes;
+    }
+    @Override
     public String toString() {
         return "FunctionType";
     }

@@ -35,6 +35,10 @@ public class CharType extends SimpleType {
         }
         return t;
     }
+    @Override
+    public int numberOfBytes() {
+        return 1;
+    }
 
     @Override
     public String toString() {

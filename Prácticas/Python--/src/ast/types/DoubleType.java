@@ -36,6 +36,10 @@ public class DoubleType extends SimpleType {
         return t;
     }
     @Override
+    public int numberOfBytes() {
+        return 4;
+    }
+    @Override
     public String toString() {
         return "DoubleType";
     }

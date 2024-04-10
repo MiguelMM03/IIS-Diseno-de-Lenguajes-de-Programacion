@@ -89,6 +89,9 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     @Override
     public Type parenthesis(List<Type> types, ASTNode ast) {
         return new ErrorType(ast.getLine(),ast.getColumn(),"Function type expected");
-
+    }
+    @Override
+    public int numberOfBytes(){
+        return 0;
     }
 }
