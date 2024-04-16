@@ -2,6 +2,7 @@ package codegenerator;
 
 import ast.Definition;
 import ast.Program;
+import ast.Statement;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
 import ast.types.FunctionType;
@@ -15,14 +16,19 @@ public class OffSetVisitor extends AbstractCGVisitor<Void,Void>{
     public Void visit(VariableDef ast, Void param) {
         ast.setOffset(offset);
         offset += ast.getType().numberOfBytes();
+        ast.getType().accept(this,param);
         return null;
     }
     @Override
     public Void visit(FunctionDef ast, Void param){
-        int offset = -4;
+        int localOffset = 0;
+        ast.getType().accept(this,param);
         for(VariableDef def:ast.getVars()){
-            def.setOffset(offset);
-            offset -= def.getType().numberOfBytes();
+            localOffset -= def.getType().numberOfBytes();
+            def.setOffset(localOffset);
+        }
+        for(Statement st:ast.getBody()){
+            st.accept(this,param);
         }
         return null;
     }
@@ -33,6 +39,7 @@ public class OffSetVisitor extends AbstractCGVisitor<Void,Void>{
         for(RecordField def:ast.getRecordFields()){
             def.setOffset(offset);
             offset += def.getType().numberOfBytes();
+            def.getType().accept(this,param);
         }
         return null;
     }
@@ -40,7 +47,7 @@ public class OffSetVisitor extends AbstractCGVisitor<Void,Void>{
     @Override
     public Void visit(FunctionType ast, Void param) {
         int offset = 4;
-        for(int i=ast.getParams().size();i>0;i--){
+        for(int i=ast.getParams().size()-1;i>=0;i--){
             VariableDef def=ast.getParams().get(i);
             def.setOffset(offset);
             offset += def.getType().numberOfBytes();
