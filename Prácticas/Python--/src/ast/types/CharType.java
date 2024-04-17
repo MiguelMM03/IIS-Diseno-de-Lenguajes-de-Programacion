@@ -44,4 +44,8 @@ public class CharType extends SimpleType {
     public String toString() {
         return "CharType";
     }
+    @Override
+    public char suffix() {
+        return 'b';
+    }
 }

@@ -60,4 +60,8 @@ public class IntType extends SimpleType {
     public String toString() {
         return "IntType";
     }
+    @Override
+    public char suffix() {
+        return 'i';
+    }
 }

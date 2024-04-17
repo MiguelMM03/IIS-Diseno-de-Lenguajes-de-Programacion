@@ -16,4 +16,5 @@ public interface Type extends ASTNode {
     Type dot(String field,ASTNode ast);
     Type parenthesis(List<Type> types, ASTNode ast);
     int numberOfBytes();
+    char suffix();
 }

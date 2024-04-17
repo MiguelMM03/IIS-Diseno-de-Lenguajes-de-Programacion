@@ -43,4 +43,8 @@ public class DoubleType extends SimpleType {
     public String toString() {
         return "DoubleType";
     }
+    @Override
+    public char suffix() {
+        return 'f';
+    }
 }
