@@ -16,9 +16,12 @@ definition returns [List<Definition> ast=new ArrayList<>()]:
             v=var_definition {$ast.addAll($v.ast);}
         |   f=function_definition{$ast.add($f.ast);}
 ;
-main_function returns [FunctionDef ast] locals[List<VariableDef> params=new ArrayList<>(),List<Statement> body=new ArrayList<>()]:
-            'def'MAIN='main''('')'':''{'  (v=var_definition{$params.addAll($v.ast);})*(s=statement{$body.addAll($s.ast);})*'}'
-            {$ast=new FunctionDef($MAIN.getLine(),$MAIN.getCharPositionInLine()+1,$MAIN.text,VoidType.getInstance(),$params,$body);}
+main_function returns [FunctionDef ast] locals[List<VariableDef> params=new ArrayList<>(),List<VariableDef> vars=new ArrayList<>(),List<Statement> body=new ArrayList<>()]:
+            'def'MAIN='main''('')'':''{'  (v=var_definition{$vars.addAll($v.ast);})*(s=statement{$body.addAll($s.ast);})*'}'
+            {
+            FunctionType ft=new FunctionType($MAIN.getLine(),$MAIN.getCharPositionInLine()+1,VoidType.getInstance(),$params);
+            $ast=new FunctionDef($MAIN.getLine(),$MAIN.getCharPositionInLine()+1,$MAIN.text,ft,$vars,$body);
+            }
 ;
 var_definition returns[List<VariableDef> ast]:
     v=var_definition_aux';'{$ast=$v.ast;}

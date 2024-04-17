@@ -4,14 +4,19 @@ import ast.Definition;
 import ast.Program;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
+import ast.statements.Asignment;
+import ast.statements.Input;
 import ast.statements.Print;
+import ast.types.FunctionType;
 
-public class ExecuteCGVisitor extends AbstractCGVisitor<Void,Void>{
+public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
     private CodeGenerator cg;
-    private AddressCGVisitor address=new AddressCGVisitor(cg);
-    private ValueCGVisitor value=new ValueCGVisitor(cg);
+    private AddressCGVisitor address;
+    private ValueCGVisitor value;
     public ExecuteCGVisitor(CodeGenerator cg) {
         this.cg=cg;
+        address=new AddressCGVisitor(cg);
+        value=new ValueCGVisitor(cg);
     }
     /*
     execute[[Program: program -> definition*]]
@@ -29,13 +34,13 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void,Void>{
         })
      */
     @Override
-    public Void visit(Program ast, Void param) {
+    public Void visit(Program ast, FunctionDef param) {
         for(Definition def: ast.getDefinitions()){
             if(def instanceof VariableDef){
                 def.accept(this,param);
             }
         }
-        cg.call("main");
+        cg.callMain();
         cg.halt();
         for(Definition def: ast.getDefinitions()){
             if(def instanceof FunctionDef){
@@ -45,14 +50,107 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void,Void>{
         return null;
     }
     /*
+        execute(FunctionDef: definition -> type ID varDefinition* statement*)
+            <label>ID:
+            varDefinition*.forEach(v->v.accept(this,param))
+            int bytesLocals=varDefinition*.isEmpty()?0:-varDefinition*.get(varDefinition*.size()-1).getOffset();
+            <enter> bytesLocals
+            int bytesParam=type.params.stream().mapToInt(p->p.getType().numberOfBytes()).sum();
+            int bytesReturn=type.getReturnType().numberOfBytes();
+            statements*.forEach(s->execute[[s]](bytesLocals, bytesParam, bytesReturn))
+            if(bytesReturn==0){
+                <ret> bytesReturn <,> bytesLocals <,> bytesParam
+            }
+
+     */
+    @Override
+    public Void visit(FunctionDef ast, FunctionDef param){
+        cg.line(ast.getLine());
+        cg.comment("Function "+ast.getName());
+        cg.newLabel(ast.getName());
+        cg.comment("Parameters");
+        ast.getType().accept(this,param);
+        cg.comment("Local variables");
+        ast.getVars().forEach(
+            v->v.accept(this,param)
+        );
+        ast.setBytesLocals(ast.getVars().isEmpty()?0:-ast.getVars().get(ast.getVars().size()-1).getOffset());
+        cg.enter(ast.getBytesLocals());
+        ((FunctionType)ast.getType()).setBytesParam(((FunctionType)ast.getType()).getParams().stream().mapToInt(p->p.getType().numberOfBytes()).sum());
+        ((FunctionType)ast.getType()).setBytesReturn(((FunctionType) ast.getType()).getReturnType().numberOfBytes());
+        ast.getBody().forEach(
+            s->s.accept(this,ast)
+        );
+        if(((FunctionType)ast.getType()).getBytesReturn()==0) {
+            cg.ret(((FunctionType)ast.getType()).getBytesReturn(), ast.getBytesLocals(), ((FunctionType)ast.getType()).getBytesParam());
+        }
+        return null;
+    }
+    /*
+    execute[[VariableDef: definition -> type ID]]
+        <'*>type.toString() ID <(offset >definition.offset<)>
+     */
+    @Override
+    public Void visit(VariableDef ast, FunctionDef param) {
+        cg.comment(ast.getType().toString()+" "+ast.getName()+" (offset "+ast.getOffset()+")");
+        return null;
+    }
+
+    /*
+    execute[[FunctionType: type -> variableDefinition* type]]
+        variableDefinition*.forEach(v->execute[[v]])
+     */
+    @Override
+    public Void visit(FunctionType ast, FunctionDef param) {
+        ast.getParams().forEach(
+            v->v.accept(this,param)
+        );
+        return null;
+    }
+    /*
+    execute[[Asignment: statement -> expression1 expression2]]
+        address[[expression1]]()
+        value[[expression2]]()
+        cg.convertTo(expression2.getType(),expression1.getType())
+        <store> expression1.type.suffix();
+     */
+    @Override
+    public Void visit(Asignment ast, FunctionDef param) {
+        cg.line(ast.getLine());
+        cg.comment("Asignment");
+        ast.getLeft().accept(address,null);
+        ast.getRight().accept(value,null);
+        cg.convertTo(ast.getRight().getType(),ast.getLeft().getType());
+        cg.store(ast.getLeft().getType());
+        return null;
+    }
+
+    /*
     execute[[Print: statement->expression]]
         value[[expression]]()
         <out> expression.type.suffix();
      */
     @Override
-    public Void visit(Print ast, Void param) {
-        ast.getExpression().accept(value,param);
+    public Void visit(Print ast, FunctionDef param) {
+        cg.line(ast.getLine());
+        cg.comment("Write");
+        ast.getExpression().accept(value,null);
         cg.out(ast.getExpression().getType());
+        return null;
+    }
+    /*
+    execute[[Print: statement->expression]]
+        address[[expression]]()
+        <in> expression.type.suffix();
+        <store> expression.type.suffix();
+     */
+    @Override
+    public Void visit(Input ast, FunctionDef param) {
+        cg.line(ast.getLine());
+        cg.comment("Read");
+        ast.getExpression().accept(address,null);
+        cg.in(ast.getExpression().getType());
+        cg.store(ast.getExpression().getType());
         return null;
     }
 

@@ -21,6 +21,10 @@ public class IntType extends SimpleType {
     }
 
     @Override
+    public Type asBuiltInType(ASTNode ast) {
+        return this;
+    }
+    @Override
     public Type asLogical(ASTNode ast) {
         return instance;
     }

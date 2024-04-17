@@ -27,6 +27,8 @@ public abstract class AbstractVisitor<TP,TR> implements Visitor<TP,TR>{
 
     @Override
     public TR visit(Cast ast, TP param) {
+        ast.getType().accept(this,param);
+        ast.getExpression().accept(this,param);
         return null;
     }
 

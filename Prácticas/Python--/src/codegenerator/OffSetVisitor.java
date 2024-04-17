@@ -8,8 +8,9 @@ import ast.definitions.VariableDef;
 import ast.types.FunctionType;
 import ast.types.RecordField;
 import ast.types.StructType;
+import semantic.AbstractVisitor;
 
-public class OffSetVisitor extends AbstractCGVisitor<Void,Void>{
+public class OffSetVisitor extends AbstractVisitor<Void,Void> {
     int offset=0;
 
     @Override

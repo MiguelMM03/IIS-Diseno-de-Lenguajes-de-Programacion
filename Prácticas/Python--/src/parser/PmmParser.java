@@ -248,6 +248,7 @@ public class PmmParser extends Parser {
 	public static class Main_functionContext extends ParserRuleContext {
 		public FunctionDef ast;
 		public List<VariableDef> params = new ArrayList<>();
+		public List<VariableDef> vars = new ArrayList<>();
 		public List<Statement> body = new ArrayList<>();
 		public Token MAIN;
 		public Var_definitionContext v;
@@ -304,7 +305,7 @@ public class PmmParser extends Parser {
 					{
 					setState(49);
 					((Main_functionContext)_localctx).v = var_definition();
-					_localctx.params.addAll(((Main_functionContext)_localctx).v.ast);
+					_localctx.vars.addAll(((Main_functionContext)_localctx).v.ast);
 					}
 					} 
 				}
@@ -329,7 +330,10 @@ public class PmmParser extends Parser {
 			}
 			setState(65);
 			match(T__6);
-			((Main_functionContext)_localctx).ast = new FunctionDef(((Main_functionContext)_localctx).MAIN.getLine(),((Main_functionContext)_localctx).MAIN.getCharPositionInLine()+1,(((Main_functionContext)_localctx).MAIN!=null?((Main_functionContext)_localctx).MAIN.getText():null),VoidType.getInstance(),_localctx.params,_localctx.body);
+
+			            FunctionType ft=new FunctionType(((Main_functionContext)_localctx).MAIN.getLine(),((Main_functionContext)_localctx).MAIN.getCharPositionInLine()+1,VoidType.getInstance(),_localctx.params);
+			            ((Main_functionContext)_localctx).ast = new FunctionDef(((Main_functionContext)_localctx).MAIN.getLine(),((Main_functionContext)_localctx).MAIN.getCharPositionInLine()+1,(((Main_functionContext)_localctx).MAIN!=null?((Main_functionContext)_localctx).MAIN.getText():null),ft,_localctx.vars,_localctx.body);
+			            
 			}
 		}
 		catch (RecognitionException re) {

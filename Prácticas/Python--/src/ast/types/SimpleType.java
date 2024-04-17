@@ -9,10 +9,7 @@ public abstract class SimpleType extends AbstractType{
         super(line, column);
     }
 
-    @Override
-    public Type asBuiltInType(ASTNode ast) {
-        return this;
-    }
+
     @Override
     public Type promotesTo(Type type, ASTNode ast) {
         if (type instanceof ErrorType)
@@ -24,7 +21,7 @@ public abstract class SimpleType extends AbstractType{
     @Override
     public Type canBeCastTo(Type type, ASTNode ast) {
         Type t=type.asBuiltInType(ast);
-        if(t instanceof ErrorType)
+        if(!(t instanceof ErrorType))
             return t;
         return new ErrorType(ast.getLine(),ast.getColumn(),"Cannot cast "+this+" to "+type);
     }

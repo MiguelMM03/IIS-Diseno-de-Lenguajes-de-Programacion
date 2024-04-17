@@ -94,4 +94,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     public int numberOfBytes(){
         return 0;
     }
+    @Override
+    public char suffix() {
+        return 0;
+    }
 }

@@ -15,9 +15,14 @@ public class DoubleType extends SimpleType {
         }
         return instance;
     }
+
     @Override
     public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
         return visitor.visit(this,param);
+    }
+    @Override
+    public Type asBuiltInType(ASTNode ast) {
+        return this;
     }
     @Override
     public Type arithmetic(Type type, ASTNode ast) {

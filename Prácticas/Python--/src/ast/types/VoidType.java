@@ -1,5 +1,7 @@
 package ast.types;
 
+import ast.ASTNode;
+import ast.Type;
 import semantic.Visitor;
 
 public class VoidType extends SimpleType {
@@ -16,6 +18,10 @@ public class VoidType extends SimpleType {
     @Override
     public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
         return visitor.visit(this,param);
+    }
+    @Override
+    public Type asBuiltInType(ASTNode ast) {
+        return this;
     }
     @Override
     public String toString() {

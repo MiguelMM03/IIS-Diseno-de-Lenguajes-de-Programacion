@@ -21,6 +21,10 @@ public class CharType extends SimpleType {
         return visitor.visit(this,param);
     }
     @Override
+    public Type asBuiltInType(ASTNode ast) {
+        return this;
+    }
+    @Override
     public Type arithmetic(Type type, ASTNode ast) {
         if (type instanceof IntType || type instanceof CharType) {
             return IntType.getInstance();

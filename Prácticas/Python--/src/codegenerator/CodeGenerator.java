@@ -1,6 +1,9 @@
 package codegenerator;
 
 import ast.Type;
+import ast.types.CharType;
+import ast.types.DoubleType;
+import ast.types.IntType;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -28,7 +31,7 @@ public class CodeGenerator {
         out.println("\tpusha\t"+constant);
         out.flush();
     }
-    public void push(float constant){
+    public void push(double constant){
         out.println("\tpushf\t"+constant);
         out.flush();
     }
@@ -60,6 +63,25 @@ public class CodeGenerator {
         out.println("\tmod"+type.suffix());
         out.flush();
     }
+    public void arithmetic(Type type, String operator){
+        switch (operator){
+            case "+":
+                add(type);
+                break;
+            case "-":
+                sub(type);
+                break;
+            case "*":
+                mul(type);
+                break;
+            case "/":
+                div(type);
+                break;
+            case "%":
+                mod(type);
+                break;
+        }
+    }
 
     public void gt(Type type){
         out.println("\tgt"+type.suffix());
@@ -86,6 +108,28 @@ public class CodeGenerator {
         out.println("\tne"+type.suffix());
         out.flush();
     }
+    public void comparator(Type type, String operator){
+        switch (operator){
+            case "<":
+                lt(type);
+                break;
+            case ">":
+                gt(type);
+                break;
+            case "<=":
+                le(type);
+                break;
+            case ">=":
+                ge(type);
+                break;
+            case "==":
+                eq(type);
+                break;
+            case "!=":
+                ne(type);
+                break;
+        }
+    }
     public void and(){
         out.println("\tand");
         out.flush();
@@ -97,6 +141,16 @@ public class CodeGenerator {
     public void not(){
         out.println("\tnot");
         out.flush();
+    }
+    public void logical(String operator){
+        switch (operator){
+            case "&&":
+                and();
+                break;
+            case "||":
+                or();
+                break;
+        }
     }
     public void load(Type type){
         out.println("\tload"+type.suffix());
@@ -130,9 +184,37 @@ public class CodeGenerator {
         out.println("\ti2b");
         out.flush();
     }
-    public void newLabel(){
-        labels++;
-        out.println("label"+labels+":");
+    public void convertTo(Type from, Type to) {
+        if (from.equals(IntType.getInstance())) {
+            if (to.equals(CharType.getInstance())) {
+                i2b();
+            } else if (to.equals(DoubleType.getInstance())) {
+                i2f();
+            }
+        } else if (from.equals(DoubleType.getInstance())) {
+            if (to.equals(IntType.getInstance())) {
+                f2i();
+            } else if (to.equals(CharType.getInstance())) {
+                f2i();
+                i2b();
+            }
+        } else if (from.equals(CharType.getInstance())) {
+            if (to.equals(IntType.getInstance())) {
+                b2i();
+            } else if (to.equals(DoubleType.getInstance())) {
+                b2i();
+                i2f();
+            }
+        }
+        this.out.flush();
+    }
+    public void newLabel(String name){
+        if(name.equals("main")){
+            out.println("main:");
+        }else {
+            labels++;
+            out.println("label" + labels + ":");
+        }
         out.flush();
     }
     public String nextLabel(){
@@ -154,6 +236,10 @@ public class CodeGenerator {
     }
     public void call(String label){
         out.println("\tcall\t"+label);
+        out.flush();
+    }
+    public void callMain(){
+        out.println("\tcall\tmain");
         out.flush();
     }
     public void enter(int bytes){

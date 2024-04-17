@@ -10,6 +10,7 @@ import java.util.List;
 public class FunctionDef extends AbstractDefinition{
     private List<VariableDef> vars =new ArrayList<>();
     private List<Statement> body=new ArrayList<>();
+    private int bytesLocals;
 
     public FunctionDef(int line, int column, String name, Type type, List<VariableDef> vars, List<Statement> body) {
         super(line, column, name, type);
@@ -27,5 +28,13 @@ public class FunctionDef extends AbstractDefinition{
     @Override
     public <TP,TR> TR accept(Visitor<TP,TR> visitor, TP param){
         return visitor.visit(this,param);
+    }
+
+    public int getBytesLocals() {
+        return bytesLocals;
+    }
+
+    public void setBytesLocals(int bytesLocals) {
+        this.bytesLocals = bytesLocals;
     }
 }
