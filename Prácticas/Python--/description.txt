@@ -1,69 +1,87 @@
-PROGRAM
-=======
-A program is a sequence of definitions.
-Definitions can be variables or functions.
+New line characters are instruction delimiters
 
-VARIABLE DEFINITION
-===================
-The syntax of a variable definition is a non-empty enumeration of comma-separated identifiers followed by a ":" and a type.
-Variable definitions must end with the ";" character.
+' is for one-line comments
 
-FUNCTION DEFINITION
-===================
-Functions are defined using the "def" keyword, the function identifier and a list of coma-separated parameters between ( and ) followed by ":" and the return type when needed.
-The return type and parameter types must be built-in (i.e., no arrays or records).
-The function body goes between { and }.
-The bodies of functions are sequences of variable definitions followed by sequences of statements.
-Both must end with the ";" character.
-The last and mandatory function is "main",
-which does not return anything and receives no parameters.
+Push instructions
 
-TYPES
-=====
-Built-in types are "int", "double" and "char".
-Array types can be created with the "[]" type constructor, specifying the size of the array with an integer constant (like C) followed by any type.
-The "struct" type constructor is added for specifying record types.
-Records have no type identifier, and fields are declared as var definitions between { and }.
+	pushb <ASCII_code>	Pushes the character (1 byte) onto the stack
+	push[i] <int_constant> 	Pushes the integer literal (2 bytes) onto the stack
+	pushf <real_constant> 	Pushes the real number (4 bytes) onto the stack
+	pusha <int_constant> 	Pushes the integer address (2 bytes) onto the stack
+	push[a] bp 		Pushes the value of the bp register (2 bytes)
 
-STATEMENTS
-==========
-The syntax of a write statement is the "print" keyword followed by a non-empty comma-separated list of expressions.
-The read statement is similar, but using the "input" keyword.
-Assignments are built with two expressions separated by the "=" operator.
-If / else and while statements follow the Python syntax.
-The statement body goes between { and }, they can be omitted if there is only one single statement.
-The return <expression> statement is also supported (the expression is mandatory).
-A function invocation may be an expression or a statement.
-A procedure invocation is always a statement.
+Load and store
+
+	loadb, load[i], loadf 		Pop a memory address off the stack (2 bytes). 
+					Then, they push onto the stack the content (1, 2 or 4 bytes) of
+					the address popped in the previous point
+	storeb, store[i], storef 	Pop from the stack 1, 2 or 4 bytes. 
+					Then, they pop from the stack a memory address (2 bytes). 
+					The content of the memory address is replaced with the value 
+					popped in the first step
+
+Popping and duplicating values on the stack
+
+	popb, pop[i], popf 	Pop 1, 2 or 4 bytes, respectively, off the stack
+	dupb, dup[i], dupf 	Duplicate the 1, 2 or 4 bytes, respectively, on the top of the stack
+
+Arithmetic operations. They pop two operands, perform the operation and push the result.
+
+	add[i], addf 	For addition
+	sub[i], subf 	For subtraction
+	mul[i], mulf 	For multiplication
+	div[i], divf 	For division
+	mod[i], modf 	For modulus
+
+Comparison operations. They pop two operands, perform the operation and push the result.
+
+	gt[i], gtf 	For "greater than" comparison
+	lt[i], ltf 	For "lower than" comparison
+	ge[i], gef 	For "greater or equal" comparison
+	le[i], lef 	For "lower or equal than" comparison
+	eq[i], eqf 	For "equal to" comparison
+	ne[i], nef 	For "not equal" comparison
+
+Logical operations. Pop one or two operands, perform the operation and push the result.
+
+	and 	For the "and" logical operation
+	or 		For the "or" logical operation
+	not 	For the unary "not" logical operation
+
+Input / Output
+
+	outb, out[i], outf 	Pop one value off the stack and shows it in the console
+	inb, in[i], inf 	Read a value from the keyboard and pushes it onto the stack
+
+Conversions
+
+	b2i 	Pops one character and pushes it as an integer
+	i2f 	Pops one integer and pushes it as a real number
+	f2i 	Pops one real number and pushes it as an integer
+	i2b 	Pops one integer and pushes it as a character
+	
+Jumps
+	<id>: 			Defines one label for jumps and invocations (functions).
+	jmp <label>		Jumps (unconditionally) to the label specified as a parameter.
+	jz <label> 		Pops one integer and jumps to the label if the popped integer is zero.
+	jnz <label> 	Pops one integer and jumps to the label if the popped integer is not zero.
+
+Functions
+
+	<id>:			Defines a label for jumps and invocations (functions)
+	call <id> 		Invokes the <id> function
+	enter <int_constant> 	Allocates <int_constant> bytes on the top of the stack 
+	ret <int_constant>,	Returns from a function invocation. 
+	    <int_constant>, 	The first constant represents the bytes to return; 
+        <int_constant> 	the second one, the bytes of all the local variables; 
+				and the last one, the bytes of all the arguments.
+	halt 			Terminates the program execution
+
+Debugging info
+
+	#source <string_constant> 	Allows the MAPL IDE to associate assembly code 
+					to the high-level source program
+	#line <INT_CONSTANT> 		Allows the MAPL IDE to associate the assembly code 
+					corresponding to each high-level statement
 
 
-EXPRESSIONS
-===========
-The cast expression follows the C syntax.
-Expressions are built with:
-- Integer, real and character constants without sign.
-- Identifiers.
-- The following operators applied to one or two expressions
-(descending order of precedence):
-		( )			Non associative
-		[]			Non associative
- 		.			Left associative
-        CAST     	Non associative
-		- (unary)	Non associative
-        !			Non associative
-		* / %		Left associative
-		+ -			Left associative
-	> >= < <= != ==	Left associative
-------------------------------------------------------------------------------------------------------------------------
-Case sensitive lexical tokens:
-  One-line comments starting with # 
-  Multiple-line comments starting with """ and ending with """
-  Identifiers starting with a letter or _ and followed by letter, digit or _
-  Integer constants without sign  
-  Real constants with floating point
-	12.3, 2., .34
-  Real constants with mantissa and exponent
-	34.12E-3, 3e3	
-  Char constants between ' and '
-  Char constants identifying the ASCII code, e.g. '\126'
-  The two special char constants '\n' and '\t'

@@ -35,7 +35,7 @@ public class FunctionType extends AbstractType  {
             return new ErrorType(ast.getLine(), ast.getColumn(), "Number of parameters does not match");
         }
         for(int i=0;i<types.size();i++){
-            Type t=params.get(i).getType().promotesTo(types.get(i),ast);
+            Type t=params.get(i).getType().promotesTo(types.get(i),ast); //TODO: Check if this is correct
             if(t instanceof ErrorType){
                 return new ErrorType(ast.getLine(), ast.getColumn(), "Type of parameter "+(i+1)+" does not match. Expected: "+params.get(i).getType().toString()+". Found: "+types.get(i).toString());
             }
