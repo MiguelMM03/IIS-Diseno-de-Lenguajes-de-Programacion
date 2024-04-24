@@ -1,13 +1,14 @@
 package codegenerator;
 
 import ast.Definition;
+import ast.Expression;
 import ast.Program;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
-import ast.statements.Asignment;
-import ast.statements.Input;
-import ast.statements.Print;
+import ast.expressions.FunctionCall;
+import ast.statements.*;
 import ast.types.FunctionType;
+import ast.types.VoidType;
 
 public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
     private CodeGenerator cg;
@@ -151,6 +152,95 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
         ast.getExpression().accept(address,null);
         cg.in(ast.getExpression().getType());
         cg.store(ast.getExpression().getType());
+        return null;
+    }
+
+    /*
+    execute[[While: statement -> expression statement*]]
+        String condition=cg.nextLabel();
+        String end=cg.nextLabel();
+        <condition:>
+        value[[expression]]()
+        <jz end>
+        statement*.forEach(s->execute[[s]])
+        <jmp condition>
+        <end:>
+     */
+    @Override
+    public Void visit(While ast, FunctionDef param) {
+        String condition=cg.nextLabel();
+        String end=cg.nextLabel();
+        cg.line(ast.getLine());
+        cg.comment("While");
+        cg.newLabel("condition");
+        ast.getCondition().accept(value,null);
+        cg.jz(end);
+        ast.getBody().forEach(
+            s->s.accept(this,param)
+        );
+        cg.jmp(condition);
+        cg.newLabel("end");
+        return null;
+    }
+    /*
+    execute[[Conditional: statement -> expression statement*]]
+        String elseLabel=cg.nextLabel();
+        String end=cg.nextLabel();
+        <condition:>
+        value[[expression]]()
+        <jz elseLabel>
+        statement*.forEach(s->execute[[s]])
+        <jmp end>
+        <elseLabel:>
+        statement*.forEach(s->execute[[s]])
+        <end:>
+     */
+    @Override
+    public Void visit(Conditional ast, FunctionDef param) {
+        String elseLabel=cg.nextLabel();
+        String end=cg.nextLabel();
+        cg.line(ast.getLine());
+        cg.comment("Conditional");
+        ast.getCondition().accept(value,null);
+        cg.jz(elseLabel);
+        ast.getBodyIf().forEach(
+            s->s.accept(this,param)
+        );
+        cg.jmp(end);
+        cg.newLabel("elseLabel");
+        ast.getBodyElse().forEach(
+            s->s.accept(this,param)
+        );
+        cg.newLabel("end");
+        return null;
+    }
+
+    /*
+    execute[[FunctionCall: expression1 -> expression2 expression3]]
+            value[[expression1]]()
+            <pop> expression1.type.suffix();
+     */
+    @Override
+    public Void visit(FunctionCall ast, FunctionDef param) {
+        cg.line(ast.getLine());
+        cg.comment("Function call");
+        ast.accept(value,null);
+        if(!(ast.getType() instanceof VoidType)){
+            cg.pop(ast.getType());
+        }
+        return null;
+    }
+    @Override
+    public Void visit(Return ast, FunctionDef param) {
+        cg.line(ast.getLine());
+        cg.comment("Return");
+        if(ast.getExpression()!=null){
+            ast.getExpression().accept(value,null);
+            cg.ret(ast.getExpression().getType().numberOfBytes(),param.getBytesLocals(),((FunctionType)param.getType()).getBytesParam());
+        }
+        else{
+            cg.ret(0,param.getBytesLocals(),((FunctionType)param.getType()).getBytesParam());
+        }
         return null;
     }
 

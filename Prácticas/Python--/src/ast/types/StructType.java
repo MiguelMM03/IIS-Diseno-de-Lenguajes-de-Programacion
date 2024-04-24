@@ -44,4 +44,14 @@ public class StructType extends AbstractType {
     public String toString() {
         return "StructType";
     }
+
+    @Override
+    public RecordField getField(String field) {
+        for (RecordField recordField : recordFields) {
+            if (recordField.getName().equals(field)) {
+                return recordField;
+            }
+        }
+        return null;
+    }
 }

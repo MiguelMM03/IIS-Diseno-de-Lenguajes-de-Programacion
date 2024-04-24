@@ -1,5 +1,7 @@
 package ast;
 
+import ast.types.RecordField;
+
 import java.util.List;
 
 public interface Type extends ASTNode {
@@ -17,4 +19,5 @@ public interface Type extends ASTNode {
     Type parenthesis(List<Type> types, ASTNode ast);
     int numberOfBytes();
     char suffix();
+    RecordField getField(String field);
 }

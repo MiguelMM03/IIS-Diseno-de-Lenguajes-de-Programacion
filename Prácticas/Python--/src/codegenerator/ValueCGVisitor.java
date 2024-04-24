@@ -1,5 +1,7 @@
 package codegenerator;
 
+import ast.Expression;
+import ast.definitions.FunctionDef;
 import ast.expressions.*;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
@@ -136,5 +138,45 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
         cg.load(ast.getType());
         return null;
 
+    }
+
+    /*
+    value[[ArrayAccess: expression1 -> expression2 expression3]]
+        address[[expression1]]
+        <load> expression1.type.suffix();
+     */
+    @Override
+    public Void visit(ArrayAccess ast, Void param) {
+        ast.accept(address,null);
+        cg.load(ast.getType());
+        return null;
+    }
+
+    /*
+    value[[StructAccess: expression1 -> expression2 ID]]
+        address[[expression1]]
+        <load> expression1.type.suffix();
+     */
+    @Override
+    public Void visit(StructAccess ast, Void param) {
+        ast.accept(address,null);
+        cg.load(ast.getType());
+        return null;
+    }
+
+    /*
+    value[[FunctionCall: expression1 -> expression2 expression3*]]
+        for(Expression arg:expression3){
+            value[arg]()
+        }
+        <call> expression2.name
+     */
+    @Override
+    public Void visit(FunctionCall ast, Void param) {
+        for(Expression e:ast.getParams()){
+            e.accept(this,param);
+        }
+        cg.call(ast.getName().getName());
+        return null;
     }
 }

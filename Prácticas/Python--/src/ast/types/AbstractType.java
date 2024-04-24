@@ -98,4 +98,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     public char suffix() {
         return 0;
     }
+    @Override
+    public RecordField getField(String field) {
+        throw  new IllegalStateException("This type does not have fields");
+    }
 }
