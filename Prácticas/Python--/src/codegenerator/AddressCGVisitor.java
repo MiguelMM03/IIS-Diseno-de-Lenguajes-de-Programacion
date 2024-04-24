@@ -11,7 +11,9 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void,Void>{
     private ValueCGVisitor value;
     public AddressCGVisitor(CodeGenerator cg) {
         this.cg=cg;
-        value=new ValueCGVisitor(cg);
+    }
+    public void setValueVisitor(ValueCGVisitor value){
+        this.value=value;
     }
     /*
         address[[Variable: expression -> ID]]
@@ -50,7 +52,7 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void,Void>{
     public Void visit(ArrayAccess ast, Void param) {
         ast.getName().accept(this,param);
         ast.getField().accept(value,param);
-        cg.push(ast.getName().getType().numberOfBytes());
+        cg.push(ast.getType().numberOfBytes());
         cg.mul(IntType.getInstance());
         cg.add(IntType.getInstance());
         return null;

@@ -208,19 +208,20 @@ public class CodeGenerator {
         }
         this.out.flush();
     }
-    public void newLabel(String name){
+    public void printFunction(String functionName) {
+        this.out.println("\n " + functionName + ":");
+        this.out.flush();
+    }
+    public void printLabel(String name){
         if(name.equals("main")){
             out.println("main:");
         }else {
-            labels++;
-            out.println("label" + labels + ":");
+            out.println(name + ":");
         }
         out.flush();
     }
-    public String nextLabel(){
-        String label="label"+labels;
-        labels--;
-        return label;
+    public String getLabel(){
+        return "label"+labels++;
     }
     public void jz(String label){
         out.println("\tjz\t"+label);
@@ -239,7 +240,7 @@ public class CodeGenerator {
         out.flush();
     }
     public void callMain(){
-        out.println("\tcall\tmain");
+        out.println("call\tmain");
         out.flush();
     }
     public void enter(int bytes){
@@ -253,19 +254,19 @@ public class CodeGenerator {
     }
 
     public void halt(){
-        out.println("\thalt");
+        out.println("halt");
         out.flush();
     }
     public void comment(String comment){
-        out.println("'*\t"+comment);
+        out.println("\t'*\t"+comment);
         out.flush();
     }
     public void source(String filename){
-        out.println("#source\t\""+filename+"\"");
+        out.println("\n#source\t\""+filename+"\"");
         out.flush();
     }
     public void line(int line){
-        out.println("#line\t"+line);
+        out.println("\n#line\t"+line);
         out.flush();
     }
 

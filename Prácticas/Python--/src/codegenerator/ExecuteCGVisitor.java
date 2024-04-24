@@ -1,7 +1,6 @@
 package codegenerator;
 
 import ast.Definition;
-import ast.Expression;
 import ast.Program;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
@@ -18,6 +17,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
         this.cg=cg;
         address=new AddressCGVisitor(cg);
         value=new ValueCGVisitor(cg);
+        this.value.setAddressVisitor(address);
+        this.address.setValueVisitor(value);
     }
     /*
     execute[[Program: program -> definition*]]
@@ -67,8 +68,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
     @Override
     public Void visit(FunctionDef ast, FunctionDef param){
         cg.line(ast.getLine());
-        cg.comment("Function "+ast.getName());
-        cg.newLabel(ast.getName());
+        this.cg.printFunction(ast.getName());
         cg.comment("Parameters");
         ast.getType().accept(this,param);
         cg.comment("Local variables");
@@ -168,18 +168,18 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
      */
     @Override
     public Void visit(While ast, FunctionDef param) {
-        String condition=cg.nextLabel();
-        String end=cg.nextLabel();
         cg.line(ast.getLine());
         cg.comment("While");
-        cg.newLabel("condition");
+        String condition=cg.getLabel();
+        String end=cg.getLabel();
+        cg.printLabel(condition);
         ast.getCondition().accept(value,null);
         cg.jz(end);
         ast.getBody().forEach(
             s->s.accept(this,param)
         );
         cg.jmp(condition);
-        cg.newLabel("end");
+        cg.printLabel(end);
         return null;
     }
     /*
@@ -197,21 +197,23 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
      */
     @Override
     public Void visit(Conditional ast, FunctionDef param) {
-        String elseLabel=cg.nextLabel();
-        String end=cg.nextLabel();
+        String elseLabel=cg.getLabel();
+        String end=cg.getLabel();
         cg.line(ast.getLine());
         cg.comment("Conditional");
         ast.getCondition().accept(value,null);
         cg.jz(elseLabel);
+        cg.comment("if body");
         ast.getBodyIf().forEach(
             s->s.accept(this,param)
         );
         cg.jmp(end);
-        cg.newLabel("elseLabel");
+        cg.printLabel(elseLabel);
+        cg.comment("else body");
         ast.getBodyElse().forEach(
             s->s.accept(this,param)
         );
-        cg.newLabel("end");
+        cg.printLabel(end);
         return null;
     }
 

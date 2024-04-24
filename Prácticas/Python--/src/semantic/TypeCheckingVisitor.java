@@ -23,7 +23,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
         ast.setLValue(true);
         ast.getName().accept(this,param);
         ast.getField().accept(this,param);
-        ast.setType(ast.getName().getType().squareBrackets(ast.getField().getType(),ast));
+        ast.setType(ast.getName().getType().squareBrackets(ast.getField().getType(),ast)); // TODO: Check if this is correct
         return null;
     }
 

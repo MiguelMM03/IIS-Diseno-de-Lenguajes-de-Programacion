@@ -27,11 +27,10 @@ public class ArrayType extends AbstractType {
     }
     @Override
     public Type squareBrackets(Type type, ASTNode ast) {
-        Type t=type.promotesTo(IntType.getInstance(),ast);
-        if (t instanceof ErrorType) {
-            return super.squareBrackets(type, ast);
+        if (type instanceof IntType) {
+            return this.of;
         }
-        return t;
+        return super.squareBrackets(this, ast);
     }
     @Override
     public int numberOfBytes() {
@@ -39,6 +38,6 @@ public class ArrayType extends AbstractType {
     }
     @Override
     public String toString() {
-        return "ArrayType";
+        return "ArrayType [of=" + of + ", size=" + size + "]";
     }
 }

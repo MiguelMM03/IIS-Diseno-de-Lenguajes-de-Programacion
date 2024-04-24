@@ -9,7 +9,9 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
     private AddressCGVisitor address;
     public ValueCGVisitor(CodeGenerator cg) {
         this.cg=cg;
-        address=new AddressCGVisitor(cg);
+    }
+    public void setAddressVisitor(AddressCGVisitor address){
+        this.address=address;
     }
 
     /*

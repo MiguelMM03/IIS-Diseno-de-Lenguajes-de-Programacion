@@ -12,11 +12,17 @@ import semantic.AbstractVisitor;
 
 public class OffSetVisitor extends AbstractVisitor<Void,Void> {
     int offset=0;
+    int localOffset=0;
 
     @Override
     public Void visit(VariableDef ast, Void param) {
-        ast.setOffset(offset);
-        offset += ast.getType().numberOfBytes();
+        if(ast.getScope()==0){
+            ast.setOffset(offset);
+            offset += ast.getType().numberOfBytes();
+        }else{
+            this.localOffset-= ast.getType().numberOfBytes();
+            ast.setOffset(localOffset);
+        }
         ast.getType().accept(this,param);
         return null;
     }
@@ -25,8 +31,7 @@ public class OffSetVisitor extends AbstractVisitor<Void,Void> {
         int localOffset = 0;
         ast.getType().accept(this,param);
         for(VariableDef def:ast.getVars()){
-            localOffset -= def.getType().numberOfBytes();
-            def.setOffset(localOffset);
+            def.accept(this,param);
         }
         for(Statement st:ast.getBody()){
             st.accept(this,param);
