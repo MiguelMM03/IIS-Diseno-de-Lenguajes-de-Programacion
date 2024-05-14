@@ -213,11 +213,7 @@ public class CodeGenerator {
         this.out.flush();
     }
     public void printLabel(String name){
-        if(name.equals("main")){
-            out.println("main:");
-        }else {
-            out.println(name + ":");
-        }
+        out.println(name + ":");
         out.flush();
     }
     public String getLabel(){
