@@ -67,4 +67,30 @@ label0:
 	loadi
 	outi
 label1:
+
+#line	14
+	'*	Conditional
+	pushi	1
+	jz	label2
+	'*	if body
+
+#line	15
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	outi
+	jmp	label3
+label2:
+	'*	else body
+
+#line	18
+	'*	Write
+	pusha bp
+	pushi	-4
+	addi
+	loadi
+	outi
+label3:
 	ret	0,4,0

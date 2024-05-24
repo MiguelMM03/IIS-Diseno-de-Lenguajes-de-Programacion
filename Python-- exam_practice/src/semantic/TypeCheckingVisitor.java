@@ -181,6 +181,18 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
 
         return null;
     }
+    @Override
+    public Void visit(For ast, Type param) {
+        ast.getCondition().accept(this,param);
+        ast.getCondition().setType(ast.getCondition().getType().asLogical(ast));
+        ast.getInitialization().accept(this,param);
+        ast.getChange().accept(this,param);
+        for(Statement def: ast.getBody()){
+            def.accept(this,param);
+        }
+
+        return null;
+    }
 
     @Override
     public Void visit(FunctionType ast, Type param) {

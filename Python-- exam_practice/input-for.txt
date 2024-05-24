@@ -1,0 +1,7 @@
+a:int;
+def main(): {
+    i:int;
+    for(i=0;i<10;i=i+1):{
+        print(i);
+    }
+}

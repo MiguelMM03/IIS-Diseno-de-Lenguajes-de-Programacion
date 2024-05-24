@@ -1,1 +1,1 @@
-mono ./mapl/TextVM.exe output-boolean.txt
+mono ./mapl/TextVM.exe output-for.txt

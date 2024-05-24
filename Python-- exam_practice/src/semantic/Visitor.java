@@ -28,6 +28,7 @@ public interface Visitor <TP,TR>{
     TR visit(Print ast, TP param);
     TR visit(Return ast, TP param);
     TR visit(While ast, TP param);
+    TR visit(For ast, TP param);
     TR visit(ArrayType ast, TP param);
     TR visit(CharType ast, TP param);
     TR visit(DoubleType ast, TP param);

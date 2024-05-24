@@ -1,0 +1,56 @@
+
+#source	"input-for.txt"
+	'*	IntType a (offset 0)
+call	main
+halt
+
+#line	2
+
+ main:
+	'*	Parameters
+	'*	Local variables
+	'*	IntType i (offset -2)
+	enter	2
+
+#line	4
+	'*	For
+
+#line	4
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pushi	0
+	storei
+label0:
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	10
+	lti
+	jz	label1
+
+#line	5
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	outi
+
+#line	4
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label0
+label1:
+	ret	0,2,0

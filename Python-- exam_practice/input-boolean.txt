@@ -11,4 +11,10 @@ def main(): {
     else:{
         print(false_var);
 	}
+	if(true):{
+	    print(true_var);
+    }
+    else:{
+        print(false_var);
+	}
 }

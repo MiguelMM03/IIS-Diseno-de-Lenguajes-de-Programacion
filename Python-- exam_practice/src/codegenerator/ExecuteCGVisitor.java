@@ -183,6 +183,37 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
         return null;
     }
     /*
+    execute[[For: statement1 -> statement2 expression statement3 statement*]]
+        String condition=cg.nextLabel();
+        String end=cg.nextLabel();
+        execute[[statement2]]
+        <condition:>
+        value[[expression]]
+        <jz end>
+        statement*.forEach(s->execute[[s]])
+        execute[[statement3]]
+        <jmp condition>
+        <end:>
+     */
+    @Override
+    public Void visit(For ast, FunctionDef param) {
+        cg.line(ast.getLine());
+        cg.comment("For");
+        String condition=cg.getLabel();
+        String end=cg.getLabel();
+        ast.getInitialization().accept(this,param);
+        cg.printLabel(condition);
+        ast.getCondition().accept(value,null);
+        cg.jz(end);
+        ast.getBody().forEach(
+                s->s.accept(this,param)
+        );
+        ast.getChange().accept(this,param);
+        cg.jmp(condition);
+        cg.printLabel(end);
+        return null;
+    }
+    /*
     execute[[Conditional: statement -> expression statement*]]
         String elseLabel=cg.nextLabel();
         String end=cg.nextLabel();

@@ -107,6 +107,10 @@ public class AbstractCGVisitor<TP,TR> implements Visitor<TP,TR> {
     public TR visit(While ast, TP param) {
         throw new IllegalStateException("Exception in visit While");
     }
+    @Override
+    public TR visit(For ast, TP param) {
+        throw new IllegalStateException("Exception in visit For");
+    }
 
     @Override
     public TR visit(ArrayType ast, TP param) {

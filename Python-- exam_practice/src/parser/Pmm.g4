@@ -62,12 +62,15 @@ function_definition returns[FunctionDef ast] locals[List<VariableDef> params=new
 statement returns [List<Statement> ast=new ArrayList<>();] locals[List<Statement> elseBody=new ArrayList<Statement>()]:
             'print'e1=expression{$ast.add(new Print($e1.ast.getLine(),$e1.ast.getColumn()+1,$e1.ast));}(','e2=expression{$ast.add(new Print($e2.ast.getLine(),$e2.ast.getColumn()+1,$e2.ast));})*';'
         |   'input'e1=expression{$ast.add(new Input($e1.ast.getLine(),$e1.ast.getColumn()+1,$e1.ast));}(','e2=expression{$ast.add(new Input($e2.ast.getLine(),$e2.ast.getColumn()+1,$e2.ast));})*';'
-        |   e1=expression OP='=' e2=expression';'{$ast.add(new Asignment($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast));}
+        |   assignment';'{$ast.add($assignment.ast);}
         |   IF='if'e=expression':'(ifBody=body_aux)('else'':'(elseBody_aux=body_aux){$elseBody=$elseBody_aux.ast;})?{$ast.add(new Conditional($IF.getLine(),$IF.getCharPositionInLine()+1,$e.ast,$ifBody.ast,$elseBody));}
         |   W='while'e=expression':'body=body_aux{$ast.add(new While($W.getLine(),$W.getCharPositionInLine()+1,$e.ast,$body.ast));}
+        |   F='for''('init=assignment';'cond=expression';'change=assignment')'':'body=body_aux{$ast.add(new For($F.getLine(),$F.getCharPositionInLine()+1,$init.ast,$cond.ast,$change.ast,$body.ast));}
         |   R='return'e=expression';'{$ast.add(new Return($R.getLine(),$R.getCharPositionInLine()+1,$e.ast));}
         |   e1=expression'('p=params_aux')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,new Variable($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text),$p.ast));}
-        |   st=statement'('')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,new Variable($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text),new ArrayList<Expression>()));}
+        ;
+assignment returns [Statement ast]:
+    e1=expression OP='=' e2=expression{$ast=new Asignment($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
 ;
 params_aux returns [List<Expression> ast = new ArrayList<>()]:
     (e1=expression{$ast.add($e1.ast);}(','e2=expression{$ast.add($e2.ast);})*)?
