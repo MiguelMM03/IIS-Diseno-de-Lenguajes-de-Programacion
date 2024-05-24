@@ -1,40 +1,47 @@
+
 #source	"input.txt"
-'*	CharType c (offset 0)
-'*	IntType i (offset 1)
-'*	DoubleType r (offset 3)
-	call	main
-	halt
+	'*	CharType c (offset 0)
+	'*	IntType i (offset 1)
+	'*	DoubleType r (offset 3)
+call	main
+halt
+
 #line	5
-'*	Function main
-main:
-'*	Parameters
-'*	Local variables
-'*	IntType a (offset -2)
-'*	IntType i (offset -4)
+
+ main:
+	'*	Parameters
+	'*	Local variables
+	'*	IntType a (offset -2)
+	'*	IntType i (offset -4)
 	enter	4
+
 #line	8
-'*	Asignment
+	'*	Asignment
 	pusha	0
 	pushb	97
 	storeb
+
 #line	9
-'*	Write
+	'*	Write
 	pusha	0
 	loadb
 	outb
+
 #line	9
-'*	Write
+	'*	Write
 	pushb	10
 	outb
+
 #line	11
-'*	Asignment
+	'*	Asignment
 	pusha bp
 	pushi	-2
 	addi
 	pushi	1
 	storei
+
 #line	12
-'*	Asignment
+	'*	Asignment
 	pusha bp
 	pushi	-4
 	addi
@@ -43,148 +50,175 @@ main:
 	pushi	3
 	muli
 	storei
+
 #line	13
-'*	Write
+	'*	Write
 	pusha bp
 	pushi	-2
 	addi
 	loadi
 	outi
+
 #line	13
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	13
-'*	Write
+	'*	Write
 	pusha bp
 	pushi	-4
 	addi
 	loadi
 	outi
+
 #line	13
-'*	Write
+	'*	Write
 	pushb	10
 	outb
+
 #line	15
-'*	Read
+	'*	Read
 	pusha	3
 	inf
 	storef
+
 #line	16
-'*	Write
+	'*	Write
 	pushi	2
 	i2f
 	pusha	3
 	loadf
 	mulf
 	outf
+
 #line	16
-'*	Write
+	'*	Write
 	pushb	10
 	outb
+
 #line	18
-'*	Write
+	'*	Write
 	pushi	3
 	i2f
 	pushf	4.5
 	subf
 	outf
+
 #line	18
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	19
-'*	Write
+	'*	Write
 	pushb	48
 	b2i
 	i2f
 	pushf	48.0
 	divf
 	outf
+
 #line	19
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	20
-'*	Write
+	'*	Write
 	pushb	48
 	b2i
 	pushb	49
 	b2i
 	modi
 	outi
+
 #line	20
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	21
-'*	Write
+	'*	Write
 	pushi	0
 	pushb	49
 	b2i
 	addi
 	outi
+
 #line	21
-'*	Write
+	'*	Write
 	pushb	10
 	outb
+
 #line	22
-'*	Write
+	'*	Write
 	pushi	1
 	pushi	2
 	lti
 	outi
+
 #line	22
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	23
-'*	Write
+	'*	Write
 	pushi	4
 	pushi	3
 	gei
 	outi
+
 #line	23
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	24
-'*	Write
+	'*	Write
 	pushi	5
 	pushi	5
 	eqi
 	outi
+
 #line	24
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	25
-'*	Write
+	'*	Write
 	pushi	1
 	pushi	2
 	and
 	outi
+
 #line	25
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	26
-'*	Write
+	'*	Write
 	pushi	0
 	pushi	3
 	or
 	outi
+
 #line	26
-'*	Write
+	'*	Write
 	pushb	32
 	outb
+
 #line	27
-'*	Write
+	'*	Write
 	pushi	0
 	not
 	outi
+
 #line	27
-'*	Write
+	'*	Write
 	pushb	10
 	outb
 	ret	0,4,0

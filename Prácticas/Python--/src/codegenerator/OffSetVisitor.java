@@ -1,7 +1,5 @@
 package codegenerator;
 
-import ast.Definition;
-import ast.Program;
 import ast.Statement;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
@@ -28,7 +26,7 @@ public class OffSetVisitor extends AbstractVisitor<Void,Void> {
     }
     @Override
     public Void visit(FunctionDef ast, Void param){
-        int localOffset = 0;
+        localOffset = 0;
         ast.getType().accept(this,param);
         for(VariableDef def:ast.getVars()){
             def.accept(this,param);

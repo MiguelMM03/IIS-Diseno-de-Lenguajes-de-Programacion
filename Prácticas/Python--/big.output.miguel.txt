@@ -111,8 +111,8 @@ label1:
  initialize:
 	'*	Parameters
 	'*	Local variables
-	'*	IntType i (offset -9)
-	enter	9
+	'*	IntType i (offset -2)
+	enter	2
 
 #line	33
 	'*	Asignment
@@ -159,7 +159,7 @@ label1:
 #line	36
 	'*	Asignment
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	pushi	1
 	storei
@@ -168,7 +168,7 @@ label1:
 	'*	While
 label2:
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	8
@@ -179,7 +179,7 @@ label2:
 	'*	Asignment
 	pusha	11
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -191,7 +191,7 @@ label2:
 	addi
 	pusha	11
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -210,7 +210,7 @@ label2:
 	'*	Asignment
 	pusha	11
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -222,7 +222,7 @@ label2:
 	addi
 	pusha	11
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -241,7 +241,7 @@ label2:
 	'*	Asignment
 	pusha	11
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -253,7 +253,7 @@ label2:
 	addi
 	pusha	11
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -266,7 +266,7 @@ label2:
 	loadi
 	pusha	11
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -283,10 +283,10 @@ label2:
 #line	41
 	'*	Asignment
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	pusha bp
-	pushi	-9
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -294,16 +294,16 @@ label2:
 	storei
 	jmp	label2
 label3:
-	ret	0,9,0
+	ret	0,2,0
 
 #line	47
 
  main:
 	'*	Parameters
 	'*	Local variables
-	'*	IntType i (offset -11)
-	'*	IntType j (offset -13)
-	enter	13
+	'*	IntType i (offset -2)
+	'*	IntType j (offset -4)
+	enter	4
 
 #line	49
 	'*	Function call
@@ -312,7 +312,7 @@ label3:
 #line	50
 	'*	Asignment
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	pushi	0
 	storei
@@ -337,7 +337,7 @@ label3:
 #line	55
 	'*	Write
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	i2f
@@ -368,7 +368,7 @@ label3:
 #line	59
 	'*	Asignment
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	pushi	0
 	storei
@@ -377,7 +377,7 @@ label3:
 	'*	While
 label4:
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	8
@@ -392,7 +392,7 @@ label4:
 #line	62
 	'*	Write
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -408,7 +408,7 @@ label4:
 	'*	Write
 	pusha	11
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -430,7 +430,7 @@ label4:
 	'*	Write
 	pusha	11
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -452,7 +452,7 @@ label4:
 	'*	Write
 	pusha	11
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	6
@@ -473,10 +473,10 @@ label4:
 #line	65
 	'*	Asignment
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -529,7 +529,7 @@ label5:
 #line	71
 	'*	Asignment
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	pushi	0
 	storei
@@ -538,7 +538,7 @@ label5:
 	'*	While
 label6:
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	2
@@ -548,7 +548,7 @@ label6:
 #line	73
 	'*	Asignment
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	pushi	0
 	storei
@@ -557,7 +557,7 @@ label6:
 	'*	While
 label8:
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	loadi
 	pushi	2
@@ -568,7 +568,7 @@ label8:
 	'*	Asignment
 	pusha	3
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	4
@@ -577,7 +577,7 @@ label8:
 	pushi	0
 	addi
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	loadi
 	pushi	2
@@ -586,11 +586,11 @@ label8:
 	pushi	0
 	addi
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	loadi
 	addi
@@ -599,10 +599,10 @@ label8:
 #line	76
 	'*	Asignment
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	loadi
 	pushi	1
@@ -614,10 +614,10 @@ label9:
 #line	78
 	'*	Asignment
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -629,7 +629,7 @@ label7:
 #line	81
 	'*	Asignment
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	pushi	0
 	storei
@@ -638,7 +638,7 @@ label7:
 	'*	While
 label10:
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	2
@@ -648,7 +648,7 @@ label10:
 #line	83
 	'*	Asignment
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	pushi	0
 	storei
@@ -657,7 +657,7 @@ label10:
 	'*	While
 label12:
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	loadi
 	pushi	2
@@ -668,7 +668,7 @@ label12:
 	'*	Write
 	pusha	3
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	4
@@ -677,7 +677,7 @@ label12:
 	pushi	0
 	addi
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	loadi
 	pushi	2
@@ -696,10 +696,10 @@ label12:
 #line	87
 	'*	Asignment
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	pusha bp
-	pushi	-13
+	pushi	-4
 	addi
 	loadi
 	pushi	1
@@ -711,10 +711,10 @@ label13:
 #line	89
 	'*	Asignment
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	pusha bp
-	pushi	-11
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -722,4 +722,4 @@ label13:
 	storei
 	jmp	label10
 label11:
-	ret	0,13,0
+	ret	0,4,0

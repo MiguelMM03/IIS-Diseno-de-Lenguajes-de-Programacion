@@ -1,9 +1,6 @@
 package codegenerator;
 
-import ast.Definition;
-import ast.Expression;
 import ast.Program;
-import ast.Statement;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
 import ast.expressions.*;

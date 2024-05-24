@@ -6,7 +6,6 @@ import ast.definitions.VariableDef;
 import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
-import errorhandler.ErrorHandler;
 
 public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
     @Override
@@ -23,7 +22,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
         ast.setLValue(true);
         ast.getName().accept(this,param);
         ast.getField().accept(this,param);
-        ast.setType(ast.getName().getType().squareBrackets(ast.getField().getType(),ast)); // TODO: Check if this is correct
+        ast.setType(ast.getName().getType().squareBrackets(ast.getField().getType(),ast));
         return null;
     }
 
