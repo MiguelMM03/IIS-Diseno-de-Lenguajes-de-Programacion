@@ -1,0 +1,69 @@
+
+#source	"input-inline-vars.txt"
+	'*	IntType a (offset 0)
+	'*	IntType b2 (offset 2)
+	'*	IntType c (offset 4)
+call	main
+halt
+
+#line	2
+
+ main:
+	'*	Parameters
+	'*	Local variables
+	'*	IntType i (offset -2)
+	enter	2
+
+#line	3
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pushi	4
+	storei
+
+#line	5
+	'*	For
+
+#line	5
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	storei
+label0:
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	10
+	lti
+	jz	label1
+
+#line	6
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	outi
+
+#line	5
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label0
+label1:
+	ret	0,2,0

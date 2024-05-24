@@ -1,1 +1,1 @@
-mono ./mapl/TextVM.exe output-for.txt
+mono ./mapl/TextVM.exe output-inline-vars.txt
