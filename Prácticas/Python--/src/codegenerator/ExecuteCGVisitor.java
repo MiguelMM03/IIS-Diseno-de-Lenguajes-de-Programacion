@@ -232,6 +232,12 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
         }
         return null;
     }
+    /*
+    execute[[Return: statement -> expression]] (bytesReturn, bytesLocals,bytesParam)
+        value[[expression]]()
+        <ret> bytesReturn <,> bytesLocals <,> bytesParam
+
+     */
     @Override
     public Void visit(Return ast, FunctionDef param) {
         cg.line(ast.getLine());
