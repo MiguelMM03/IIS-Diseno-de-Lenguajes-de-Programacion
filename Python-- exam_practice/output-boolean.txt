@@ -1,0 +1,70 @@
+
+#source	"input-boolean.txt"
+	'*	BooleanType b (offset 0)
+call	main
+halt
+
+#line	2
+
+ main:
+	'*	Parameters
+	'*	Local variables
+	'*	IntType true_var (offset -2)
+	'*	IntType false_var (offset -4)
+	enter	4
+
+#line	4
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pushi	2
+	storei
+
+#line	5
+	'*	Asignment
+	pusha bp
+	pushi	-4
+	addi
+	pushi	3
+	storei
+
+#line	6
+	'*	Asignment
+	pusha	0
+	pushi	0
+	storei
+
+#line	7
+	'*	Write
+	pusha	0
+	loadi
+	outi
+
+#line	8
+	'*	Conditional
+	pusha	0
+	loadi
+	jz	label0
+	'*	if body
+
+#line	9
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	outi
+	jmp	label1
+label0:
+	'*	else body
+
+#line	12
+	'*	Write
+	pusha bp
+	pushi	-4
+	addi
+	loadi
+	outi
+label1:
+	ret	0,4,0

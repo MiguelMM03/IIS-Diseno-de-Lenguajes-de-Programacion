@@ -1,0 +1,14 @@
+b: boolean;
+def main(): {
+	true_var,false_var:int;
+	true_var=2;
+	false_var=3;
+	b=false;
+	print(b);
+	if(b):{
+	    print(true_var);
+    }
+    else:{
+        print(false_var);
+	}
+}
