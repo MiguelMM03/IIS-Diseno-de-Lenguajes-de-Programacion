@@ -22,6 +22,7 @@ public interface Visitor <TP,TR>{
     TR visit(UnaryMinus ast, TP param);
     TR visit(UnaryNot ast, TP param);
     TR visit(Variable ast, TP param);
+    TR visit(CountElementsArrayWithConditions ast, TP param);
     TR visit(Asignment ast, TP param);
     TR visit(Conditional ast, TP param);
     TR visit(Input ast, TP param);

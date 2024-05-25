@@ -4,6 +4,7 @@ import ast.Definition;
 import ast.Program;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
+import ast.expressions.CountElementsArrayWithConditions;
 import ast.expressions.FunctionCall;
 import ast.statements.*;
 import ast.types.FunctionType;
@@ -281,6 +282,11 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
         else{
             cg.ret(0,param.getBytesLocals(),((FunctionType)param.getType()).getBytesParam());
         }
+        return null;
+    }
+    @Override
+    public Void visit(CountElementsArrayWithConditions ast, FunctionDef param) {
+        ast.accept(value,null);
         return null;
     }
 

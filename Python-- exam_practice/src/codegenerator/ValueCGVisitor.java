@@ -4,6 +4,8 @@ import ast.Expression;
 import ast.Statement;
 import ast.expressions.*;
 import ast.statements.Asignment;
+import ast.types.ArrayType;
+import ast.types.IntType;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
     private CodeGenerator cg;
@@ -203,6 +205,26 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
     public Void visit(Asignment ast, Void param){
         ast.getRight().accept(this,param);
         ((Statement)ast).accept(execute, null);
+        return null;
+    }
+    /*
+    value[[CountElementsArrayWithConditions: expression1 -> expression2 ID expression4]]
+        value[[expression2]]
+     */
+    public Void visit(CountElementsArrayWithConditions ast, Void param){
+        ArrayType arrayType = (ArrayType) ast.getArray().getType();
+        cg.push(0);
+        for(int i=0;i<arrayType.getSize();i++){
+            ast.getArray().accept(address,param);
+            cg.push(i);
+            cg.push(arrayType.isOf().numberOfBytes());
+            cg.mul(IntType.getInstance());
+            cg.add(IntType.getInstance());
+            cg.load(arrayType.isOf());
+            ast.getCondition().accept(this,param);
+            cg.comparator(arrayType.isOf(),ast.getOperator());
+            cg.add(IntType.getInstance());
+        }
         return null;
     }
 }

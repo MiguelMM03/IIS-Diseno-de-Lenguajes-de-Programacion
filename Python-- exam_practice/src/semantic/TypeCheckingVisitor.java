@@ -215,4 +215,17 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
         }
         return null;
     }
+    @Override
+    public Void visit(CountElementsArrayWithConditions ast, Type param) {
+        ast.setLValue(false);
+        ast.getArray().accept(this,param);
+        ast.getCondition().accept(this,param);
+        if(!(ast.getArray().getType() instanceof ArrayType))
+            new ErrorType(ast.getLine(),ast.getColumn(),"Expression is not an array");
+        ((ArrayType)ast.getArray().getType()).isOf().asBuiltInType(ast); //Se limita a que el array sea de tipo basico. No se permiten multi-dimensioneales
+        if(!(ast.getCondition().getType() instanceof IntType))
+            new ErrorType(ast.getLine(),ast.getColumn(),"Expression is not an integer");
+        ast.setType(IntType.getInstance());
+        return null;
+    }
 }

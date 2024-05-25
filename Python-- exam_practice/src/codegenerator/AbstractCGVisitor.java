@@ -77,6 +77,10 @@ public class AbstractCGVisitor<TP,TR> implements Visitor<TP,TR> {
     public TR visit(Variable ast, TP param) {
         throw new IllegalStateException("Exception in visit Variable");
     }
+    @Override
+    public TR visit(CountElementsArrayWithConditions ast, TP param) {
+        throw new IllegalStateException("Exception in visit CountElementsArrayWithConditions");
+    }
 
     @Override
     public TR visit(Asignment ast, TP param) {

@@ -139,6 +139,7 @@ expression returns [Expression ast] locals [List<Expression> params=new ArrayLis
         |   e1=expression OP=('+'|'-') e2=expression{$ast=new Arithmetic($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
         |   e1=expression OP=('>'|'>'|'<'|'<='|'>='|'!='|'==') e2=expression{$ast=new Comparator($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
         |   e1=expression OP=('&&'|'||') e2=expression{$ast=new Logical($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
+        |   ID '['']'OP=('>'|'<'|'==')expression{$ast=new CountElementsArrayWithConditions($ID.getLine(),$ID.getCharPositionInLine()+1,new Variable($ID.getLine(), $ID.getCharPositionInLine()+1,$ID.text),$OP.text, $expression.ast);}
 ;
 
 type returns [Type ast] locals[List<RecordField> records=new ArrayList<>()]:

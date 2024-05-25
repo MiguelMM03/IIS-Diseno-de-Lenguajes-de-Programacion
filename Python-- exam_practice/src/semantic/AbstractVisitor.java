@@ -237,4 +237,10 @@ public abstract class AbstractVisitor<TP,TR> implements Visitor<TP,TR>{
         }
         return null;
     }
+    @Override
+    public TR visit(CountElementsArrayWithConditions ast, TP param) {
+        ast.getArray().accept(this,param);
+        ast.getCondition().accept(this,param);
+        return null;
+    }
 }

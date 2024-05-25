@@ -1,1 +1,1 @@
-mono ./mapl/TextVM.exe output-multi-asignment.txt
+mono ./mapl/GVM.exe output-count-higher-elements-array.txt
