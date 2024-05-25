@@ -1,1 +1,1 @@
-mono ./mapl/TextVM.exe output-inline-vars.txt
+mono ./mapl/TextVM.exe output-multi-asignment.txt

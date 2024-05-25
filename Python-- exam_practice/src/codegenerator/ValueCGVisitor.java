@@ -1,16 +1,22 @@
 package codegenerator;
 
 import ast.Expression;
+import ast.Statement;
 import ast.expressions.*;
+import ast.statements.Asignment;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
     private CodeGenerator cg;
     private AddressCGVisitor address;
+    private ExecuteCGVisitor execute;
     public ValueCGVisitor(CodeGenerator cg) {
         this.cg=cg;
     }
     public void setAddressVisitor(AddressCGVisitor address){
         this.address=address;
+    }
+    public void setExecuteVisitor(ExecuteCGVisitor execute){
+        this.execute=execute;
     }
 
     /*
@@ -187,6 +193,16 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
             e.accept(this,param);
         }
         cg.call(ast.getName().getName());
+        return null;
+    }
+
+    /*
+    value[[Assignment: statement -> expression1 expression2]]
+        value[[expression1]]
+     */
+    public Void visit(Asignment ast, Void param){
+        ast.getRight().accept(this,param);
+        ((Statement)ast).accept(execute, null);
         return null;
     }
 }

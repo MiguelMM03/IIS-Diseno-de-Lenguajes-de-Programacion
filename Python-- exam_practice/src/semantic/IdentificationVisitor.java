@@ -5,6 +5,7 @@ import ast.Statement;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
 import ast.expressions.*;
+import ast.statements.Asignment;
 import ast.types.*;
 import symboltable.SymbolTable;
 

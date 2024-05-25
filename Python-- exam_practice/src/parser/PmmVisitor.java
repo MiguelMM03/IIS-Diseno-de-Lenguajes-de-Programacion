@@ -79,6 +79,12 @@ public interface PmmVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssignment(PmmParser.AssignmentContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link PmmParser#assignment_aux}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignment_aux(PmmParser.Assignment_auxContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link PmmParser#params_aux}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

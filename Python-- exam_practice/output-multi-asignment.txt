@@ -1,0 +1,91 @@
+
+#source	"input-multi-asignment.txt"
+	'*	IntType a (offset 0)
+call	main
+halt
+
+#line	2
+
+ main:
+	'*	Parameters
+	'*	Local variables
+	'*	IntType i (offset -2)
+	'*	IntType r (offset -4)
+	enter	4
+
+#line	3
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pushi	4
+	storei
+
+#line	4
+	'*	Asignment
+	pusha bp
+	pushi	-4
+	addi
+	pushi	5
+	storei
+
+#line	5
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	outi
+
+#line	6
+	'*	Asignment
+	pusha	0
+	pushi	6
+
+#line	6
+	'*	Asignment
+	pusha bp
+	pushi	-4
+	addi
+	pushi	6
+	storei
+
+#line	6
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pushi	6
+
+#line	6
+	'*	Asignment
+	pusha bp
+	pushi	-4
+	addi
+	pushi	6
+	storei
+	storei
+	storei
+
+#line	7
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	outi
+
+#line	8
+	'*	Write
+	pusha	0
+	loadi
+	outi
+
+#line	9
+	'*	Write
+	pusha bp
+	pushi	-4
+	addi
+	loadi
+	outi
+	ret	0,4,0

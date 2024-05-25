@@ -108,7 +108,12 @@ statement returns [List<Statement> ast=new ArrayList<>();] locals[List<Statement
         |   e1=expression'('p=params_aux')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,new Variable($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text),$p.ast));}
         ;
 assignment returns [Statement ast]:
-    e1=expression OP='=' e2=expression{$ast=new Asignment($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
+        a=assignment_aux{$ast=$a.ast;}
+;
+assignment_aux returns [Asignment ast]:
+    <assoc=right>e1=expression OP='=' a=assignment_aux{$ast=new Asignment($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$a.ast);}
+    |
+    <assoc=right>e1=expression OP='=' e2=expression{$ast=new Asignment($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast);}
 ;
 params_aux returns [List<Expression> ast = new ArrayList<>()]:
     (e1=expression{$ast.add($e1.ast);}(','e2=expression{$ast.add($e2.ast);})*)?
@@ -132,7 +137,7 @@ expression returns [Expression ast] locals [List<Expression> params=new ArrayLis
         |   OP='!'e=expression{$ast=new UnaryNot($OP.getLine(),$OP.getCharPositionInLine()+1,$e.ast);}
         |   e1=expression OP=('*'|'/'|'%') e2=expression{$ast=new Arithmetic($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
         |   e1=expression OP=('+'|'-') e2=expression{$ast=new Arithmetic($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
-        |   e1=expression OP=('>'|'>'|'='|'<'|'<='|'>='|'!='|'==') e2=expression{$ast=new Comparator($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
+        |   e1=expression OP=('>'|'>'|'<'|'<='|'>='|'!='|'==') e2=expression{$ast=new Comparator($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
         |   e1=expression OP=('&&'|'||') e2=expression{$ast=new Logical($OP.getLine(),$OP.getCharPositionInLine()+1,$e1.ast,$e2.ast,$OP.text);}
 ;
 

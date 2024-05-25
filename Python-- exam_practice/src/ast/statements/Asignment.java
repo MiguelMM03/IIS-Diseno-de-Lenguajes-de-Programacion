@@ -1,9 +1,11 @@
 package ast.statements;
 
 import ast.Expression;
+import ast.Statement;
+import ast.expressions.AbstractExpression;
 import semantic.Visitor;
 
-public class Asignment extends AbstractStatement{
+public class Asignment extends AbstractExpression implements Statement {
     private Expression left;
     private Expression right;
     public Asignment(int line, int column, Expression left, Expression right) {

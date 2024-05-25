@@ -1,0 +1,10 @@
+a:int;
+def main(): {
+    i:int=4;
+    r:int=5;
+    print(i);
+    a=i=r=6;
+    print(i);
+    print(a);
+    print(r);
+}

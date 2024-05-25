@@ -126,11 +126,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
     @Override
     public Void visit(Asignment ast, Type param) {
         ast.getLeft().accept(this,param);
+        ast.setLValue(false);
         ast.getRight().accept(this,param);
         if(!ast.getLeft().getLValue()){
             new ErrorType(ast.getLeft().getLine(),ast.getLeft().getColumn()+1,"Expression is not a LValue");
         }
-        ast.getRight().getType().promotesTo(ast.getLeft().getType(),ast);
+        ast.setType(ast.getRight().getType().promotesTo(ast.getLeft().getType(),ast));
         return null;
     }
 
