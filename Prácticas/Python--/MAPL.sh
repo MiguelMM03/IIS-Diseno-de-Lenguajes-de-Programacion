@@ -1,1 +1,1 @@
-mono ./mapl/TextVM.exe big.output.miguel.txt
+mono ./mapl/TextVM.exe control1Miguel.txt
