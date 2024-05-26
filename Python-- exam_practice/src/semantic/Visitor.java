@@ -23,6 +23,7 @@ public interface Visitor <TP,TR>{
     TR visit(UnaryNot ast, TP param);
     TR visit(Variable ast, TP param);
     TR visit(CountElementsArrayWithConditions ast, TP param);
+    TR visit(Case ast, TP param);
     TR visit(Asignment ast, TP param);
     TR visit(Conditional ast, TP param);
     TR visit(Input ast, TP param);
@@ -30,6 +31,7 @@ public interface Visitor <TP,TR>{
     TR visit(Return ast, TP param);
     TR visit(While ast, TP param);
     TR visit(For ast, TP param);
+    TR visit(Switch ast, TP param);
     TR visit(ArrayType ast, TP param);
     TR visit(CharType ast, TP param);
     TR visit(DoubleType ast, TP param);

@@ -1,0 +1,12 @@
+def main(): {
+    a:double;
+    a = 1.0;
+    switch(a): {
+        case 1.0: {
+            print('c');
+        }
+        case 3.5: {
+            print('b');
+        }
+    }
+}

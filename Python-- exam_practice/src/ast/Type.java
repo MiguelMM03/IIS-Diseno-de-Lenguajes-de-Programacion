@@ -20,4 +20,5 @@ public interface Type extends ASTNode {
     int numberOfBytes();
     char suffix();
     RecordField getField(String field);
+    Type switchable(ASTNode ast);
 }

@@ -227,4 +227,12 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void,Void>{
         }
         return null;
     }
+    /*
+    value[[Case: expression1 -> expression2 statement*]]
+        value[[expression2]]
+     */
+    public Void visit(Case ast, Void param) {
+        ast.getCondition().accept(this, param);
+        return null;
+    }
 }

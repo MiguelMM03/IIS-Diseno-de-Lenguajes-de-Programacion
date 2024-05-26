@@ -1,1 +1,1 @@
-mono ./mapl/GVM.exe output-count-higher-elements-array.txt
+mono ./mapl/GVM.exe output-switch.txt

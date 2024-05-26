@@ -102,4 +102,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
     public RecordField getField(String field) {
         throw  new IllegalStateException("This type does not have fields");
     }
+    @Override
+    public Type switchable(ASTNode ast) {
+        return new ErrorType(ast.getLine(),ast.getColumn(),"Switchable type expected");
+    }
 }

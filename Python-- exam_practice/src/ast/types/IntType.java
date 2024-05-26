@@ -45,6 +45,10 @@ public class IntType extends SimpleType {
         return t;
     }
     @Override
+    public Type switchable(ASTNode ast) {
+        return instance;
+    }
+    @Override
     public Type logic(Type type, ASTNode ast) {
         Type t=instance.promotesTo(type, ast);
         if(t instanceof ErrorType){

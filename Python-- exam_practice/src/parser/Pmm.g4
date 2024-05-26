@@ -97,7 +97,7 @@ function_definition returns[FunctionDef ast] locals[List<VariableDef> params=new
                 $ast=new FunctionDef($ID.getLine(),$ID.getCharPositionInLine()+1,$ID.text,ft,$vars,$body);
             }
 ;
-statement returns [List<Statement> ast=new ArrayList<>();] locals[List<Statement> elseBody=new ArrayList<Statement>()]:
+statement returns [List<Statement> ast=new ArrayList<>();] locals[List<Statement> elseBody=new ArrayList<Statement>(), List<Case> cases=new ArrayList<>()]:
             'print'e1=expression{$ast.add(new Print($e1.ast.getLine(),$e1.ast.getColumn()+1,$e1.ast));}(','e2=expression{$ast.add(new Print($e2.ast.getLine(),$e2.ast.getColumn()+1,$e2.ast));})*';'
         |   'input'e1=expression{$ast.add(new Input($e1.ast.getLine(),$e1.ast.getColumn()+1,$e1.ast));}(','e2=expression{$ast.add(new Input($e2.ast.getLine(),$e2.ast.getColumn()+1,$e2.ast));})*';'
         |   assignment';'{$ast.add($assignment.ast);}
@@ -106,6 +106,11 @@ statement returns [List<Statement> ast=new ArrayList<>();] locals[List<Statement
         |   F='for''('init=assignment';'cond=expression';'change=assignment')'':'body=body_aux{$ast.add(new For($F.getLine(),$F.getCharPositionInLine()+1,$init.ast,$cond.ast,$change.ast,$body.ast));}
         |   R='return'e=expression';'{$ast.add(new Return($R.getLine(),$R.getCharPositionInLine()+1,$e.ast));}
         |   e1=expression'('p=params_aux')'';'{$ast.add(new FunctionCall($e1.ast.getLine(),$e1.ast.getColumn()+1,new Variable($e1.ast.getLine(), $e1.ast.getColumn()+1, $e1.text),$p.ast));}
+        |   S='switch'e=expression':'
+            '{'
+                (CASE='case'e1=expression':'
+                (caseBody=body_aux){$cases.add(new Case($CASE.getLine(),$CASE.getCharPositionInLine()+1,$e1.ast,$caseBody.ast));})+
+            '}'{$ast.add(new Switch($S.getLine(),$S.getCharPositionInLine()+1,$e.ast,$cases));}
         ;
 assignment returns [Statement ast]:
         a=assignment_aux{$ast=$a.ast;}

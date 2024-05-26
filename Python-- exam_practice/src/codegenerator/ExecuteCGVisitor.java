@@ -4,6 +4,7 @@ import ast.Definition;
 import ast.Program;
 import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
+import ast.expressions.Case;
 import ast.expressions.CountElementsArrayWithConditions;
 import ast.expressions.FunctionCall;
 import ast.statements.*;
@@ -287,6 +288,25 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
     @Override
     public Void visit(CountElementsArrayWithConditions ast, FunctionDef param) {
         ast.accept(value,null);
+        return null;
+    }
+    @Override
+    public Void visit(Switch ast, FunctionDef param) {
+        cg.line(ast.getLine());
+        cg.comment("Switch");
+        ast.getCondition().accept(value,null);
+        for(Case c:ast.getCases()){
+            cg.dup(ast.getCondition().getType());
+            c.getCondition().accept(value,null);
+            cg.eq(ast.getCondition().getType());
+            String endCase=cg.getLabel();
+            cg.jz(endCase);
+            c.getStatements().forEach(
+                s->s.accept(this,param)
+            );
+            cg.printLabel(endCase);
+        }
+        cg.pop(ast.getCondition().getType());
         return null;
     }
 

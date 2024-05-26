@@ -122,6 +122,18 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
             ast.setType(ast.getDefinition().getType());
         return null;
     }
+    @Override
+    public Void visit(Case ast, Type param) {
+        ast.setLValue(false);
+        ast.getCondition().accept(this,param);
+        if(ast.getCondition().getType()!=null && param!=null){
+            ast.setType(ast.getCondition().getType().comparison(param, ast));
+        }
+        for(Statement def: ast.getStatements()){
+            def.accept(this,param);
+        }
+        return null;
+    }
 
     @Override
     public Void visit(Asignment ast, Type param) {
@@ -192,6 +204,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
             def.accept(this,param);
         }
 
+        return null;
+    }
+    @Override
+    public Void visit(Switch ast, Type param) {
+        ast.getCondition().accept(this,param);
+        ast.getCondition().getType().switchable(ast);
+        for(Case c:ast.getCases()){
+            c.accept(this,ast.getCondition().getType());
+        }
         return null;
     }
 

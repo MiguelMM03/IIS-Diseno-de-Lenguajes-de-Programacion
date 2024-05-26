@@ -1,0 +1,49 @@
+
+#source	"input-switch.txt"
+call	main
+halt
+
+#line	1
+
+ main:
+	'*	Parameters
+	'*	Local variables
+	'*	DoubleType a (offset -4)
+	enter	4
+
+#line	3
+	'*	Asignment
+	pusha bp
+	pushi	-4
+	addi
+	pushf	1.0
+	storef
+
+#line	4
+	'*	Switch
+	pusha bp
+	pushi	-4
+	addi
+	loadf
+	dupf
+	pushf	1.0
+	eqf
+	jz	label0
+
+#line	6
+	'*	Write
+	pushb	99
+	outb
+label0:
+	dupf
+	pushf	3.5
+	eqf
+	jz	label1
+
+#line	9
+	'*	Write
+	pushb	98
+	outb
+label1:
+	popf
+	ret	0,4,0

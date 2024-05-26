@@ -41,6 +41,10 @@ public class DoubleType extends SimpleType {
         return t;
     }
     @Override
+    public Type switchable(ASTNode ast) {
+        return instance;
+    }
+    @Override
     public int numberOfBytes() {
         return 4;
     }

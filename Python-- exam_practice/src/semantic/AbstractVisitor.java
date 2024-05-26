@@ -96,6 +96,14 @@ public abstract class AbstractVisitor<TP,TR> implements Visitor<TP,TR>{
     public TR visit(Variable ast, TP param) {
         return null;
     }
+    @Override
+    public TR visit(Case ast, TP param) {
+        ast.getCondition().accept(this,param);
+        for(Statement st:ast.getStatements()){
+            st.accept(this,param);
+        }
+        return null;
+    }
 
     @Override
     public TR visit(Asignment ast, TP param) {
@@ -149,6 +157,14 @@ public abstract class AbstractVisitor<TP,TR> implements Visitor<TP,TR>{
         ast.getChange().accept(this,param);
         for(Statement def: ast.getBody()){
             def.accept(this,param);
+        }
+        return null;
+    }
+    @Override
+    public TR visit(Switch ast, TP param) {
+        ast.getCondition().accept(this,param);
+        for(Case c:ast.getCases()){
+            c.accept(this,param);
         }
         return null;
     }

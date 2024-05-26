@@ -78,6 +78,10 @@ public class AbstractCGVisitor<TP,TR> implements Visitor<TP,TR> {
         throw new IllegalStateException("Exception in visit Variable");
     }
     @Override
+    public TR visit(Case ast, TP param) {
+        throw new IllegalStateException("Exception in visit Case");
+    }
+    @Override
     public TR visit(CountElementsArrayWithConditions ast, TP param) {
         throw new IllegalStateException("Exception in visit CountElementsArrayWithConditions");
     }
@@ -178,5 +182,9 @@ public class AbstractCGVisitor<TP,TR> implements Visitor<TP,TR> {
     @Override
     public TR visit(Program ast, TP param) {
         throw new IllegalStateException("Exception in visit Program");
+    }
+    @Override
+    public TR visit(Switch ast, TP param) {
+        throw new IllegalStateException("Exception in visit Switch");
     }
 }
