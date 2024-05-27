@@ -19,6 +19,10 @@ public abstract class SimpleType extends AbstractType{
         return new ErrorType(ast.getLine(),ast.getColumn(),"Cannot promote "+this+" to "+type);
     }
     @Override
+    public Type printeable(ASTNode ast) {
+        return this;
+    }
+    @Override
     public Type canBeCastTo(Type type, ASTNode ast) {
         Type t=type.asBuiltInType(ast);
         if(!(t instanceof ErrorType))

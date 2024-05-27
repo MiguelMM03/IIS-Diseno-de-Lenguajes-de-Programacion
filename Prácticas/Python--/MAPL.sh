@@ -1,1 +1,1 @@
-mono ./mapl/TextVM.exe control1Miguel.txt
+mono ./mapl/TextVM.exe outputexamen1.txt

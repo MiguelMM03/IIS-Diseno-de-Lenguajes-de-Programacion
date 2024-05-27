@@ -1,6 +1,7 @@
 package codegenerator;
 
 import ast.Type;
+import ast.types.BooleanType;
 import ast.types.CharType;
 import ast.types.DoubleType;
 import ast.types.IntType;

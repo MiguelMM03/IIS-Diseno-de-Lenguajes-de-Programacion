@@ -25,6 +25,18 @@ public abstract class AbstractType extends AbstractASTNode implements Type  {
             return this;
         return new ErrorType(ast.getLine(),ast.getColumn(),"A logical type was expected. Received: "+this);
     }
+    @Override
+    public Type asBoolean(ASTNode ast) {
+        if(this instanceof ErrorType)
+            return this;
+        return new ErrorType(ast.getLine(),ast.getColumn(),"A boolean type was expected. Received: "+this);
+    }
+    @Override
+    public Type printeable(ASTNode ast) {
+        if(this instanceof ErrorType)
+            return this;
+        return new ErrorType(ast.getLine(),ast.getColumn(),"A printeable type was expected. Received: "+this);
+    }
 
     public Type arithmetic(Type type, ASTNode ast) {
         if (type instanceof ErrorType)

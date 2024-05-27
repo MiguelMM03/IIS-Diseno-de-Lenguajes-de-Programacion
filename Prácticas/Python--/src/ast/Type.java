@@ -20,4 +20,6 @@ public interface Type extends ASTNode {
     int numberOfBytes();
     char suffix();
     RecordField getField(String field);
+    Type asBoolean(ASTNode ast);
+    Type printeable(ASTNode ast);
 }

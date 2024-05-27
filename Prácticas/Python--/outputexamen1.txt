@@ -1,0 +1,143 @@
+
+#source	"examen1.txt"
+call	main
+halt
+
+#line	1
+
+ main:
+	'*	Parameters
+	'*	Local variables
+	'*	IntType a (offset -2)
+	enter	2
+
+#line	3
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pushi	3
+	storei
+
+#line	4
+	'*	Conditional
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	3
+	eqi
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	4
+	gti
+	not
+	and
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	0
+	lti
+	or
+	jz	label0
+	'*	if body
+
+#line	5
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	3
+	eqi
+	jz	label2
+	pushb	116
+	outb
+	pushb	114
+	outb
+	pushb	117
+	outb
+	pushb	101
+	outb
+	jmp	label3
+label2:
+	pushb	102
+	outb
+	pushb	97
+	outb
+	pushb	108
+	outb
+	pushb	115
+	outb
+	pushb	101
+	outb
+label3:
+	pushb	10
+	outb
+	jmp	label1
+label0:
+	'*	else body
+label1:
+
+#line	9
+	'*	While
+label4:
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	6
+	lti
+	jz	label5
+
+#line	10
+	'*	Write
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	4
+	lti
+	jz	label6
+	pushb	116
+	outb
+	pushb	114
+	outb
+	pushb	117
+	outb
+	pushb	101
+	outb
+	jmp	label7
+label6:
+	pushb	102
+	outb
+	pushb	97
+	outb
+	pushb	108
+	outb
+	pushb	115
+	outb
+	pushb	101
+	outb
+label7:
+	pushb	10
+	outb
+
+#line	11
+	'*	Asignment
+	pusha bp
+	pushi	-2
+	addi
+	pusha bp
+	pushi	-2
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label4
+label5:
+	ret	0,2,0

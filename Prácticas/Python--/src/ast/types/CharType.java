@@ -37,7 +37,7 @@ public class CharType extends SimpleType {
         if(t instanceof ErrorType){
             return super.comparison(type, ast);
         }
-        return t;
+        return BooleanType.getInstance();
     }
     @Override
     public int numberOfBytes() {

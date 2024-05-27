@@ -6,6 +6,8 @@ import ast.definitions.FunctionDef;
 import ast.definitions.VariableDef;
 import ast.expressions.FunctionCall;
 import ast.statements.*;
+import ast.types.BooleanType;
+import ast.types.CharType;
 import ast.types.FunctionType;
 import ast.types.VoidType;
 
@@ -136,7 +138,37 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDef,Void>{
         cg.line(ast.getLine());
         cg.comment("Write");
         ast.getExpression().accept(value,null);
-        cg.out(ast.getExpression().getType());
+        if(ast.getExpression().getType() instanceof BooleanType) {
+            String f = cg.getLabel();
+            String end = cg.getLabel();
+            cg.jz(f);
+            cg.push('t');
+            cg.out(CharType.getInstance());
+            cg.push('r');
+            cg.out(CharType.getInstance());
+            cg.push('u');
+            cg.out(CharType.getInstance());
+            cg.push('e');
+            cg.out(CharType.getInstance());
+            cg.jmp(end);
+            cg.printLabel(f);
+            cg.push('f');
+            cg.out(CharType.getInstance());
+            cg.push('a');
+            cg.out(CharType.getInstance());
+            cg.push('l');
+            cg.out(CharType.getInstance());
+            cg.push('s');
+            cg.out(CharType.getInstance());
+            cg.push('e');
+            cg.out(CharType.getInstance());
+            cg.printLabel(end);
+            cg.push('\n');
+            cg.out(CharType.getInstance());
+        }
+         else {
+            cg.out(ast.getExpression().getType());
+        }
         return null;
     }
     /*

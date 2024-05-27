@@ -131,7 +131,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
     @Override
     public Void visit(Conditional ast, Type param) {
         ast.getCondition().accept(this,param);
-        ast.getCondition().setType(ast.getCondition().getType().asLogical(ast));
+        ast.getCondition().setType(ast.getCondition().getType().asBoolean(ast));
         for(Statement def: ast.getBodyIf()){
             def.accept(this,param);
         }
@@ -154,7 +154,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
     @Override
     public Void visit(Print ast, Type param) {
         ast.getExpression().accept(this,param);
-        ast.getExpression().getType().asBuiltInType(ast);
+        ast.getExpression().getType().printeable(ast);
         return null;
     }
 
@@ -168,7 +168,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type,Void>{
     @Override
     public Void visit(While ast, Type param) {
         ast.getCondition().accept(this,param);
-        ast.getCondition().setType(ast.getCondition().getType().asLogical(ast));
+        ast.getCondition().setType(ast.getCondition().getType().asBoolean(ast));
         for(Statement def: ast.getBody()){
             def.accept(this,param);
         }
